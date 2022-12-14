@@ -17,17 +17,33 @@ class Outcome(Enum):
         return f"Outcome({self.name})"
 
 class Match:
-    def __init__(self, team1: Team, team2: Team, outcome: Outcome):
+    def __init__(self, matchId: int, timestamp: int, team1: Team, team2: Team, outcome: Outcome):
+        self.matchId = matchId
+        self.timestamp = timestamp
         self.team1 = team1
         self.team2 = team2
         self.outcome = outcome
 
     def __repr__(self):
-        return f"Match({self.team1}, {self.team2}, {self.outcome})"
+        return f"Match({self.matchId}, {self.timestamp}, {self.team1}, {self.team2}, {self.outcome})"
 
 class MatchDataset:
     def __init__(self, matches: List[Match]):
         self.matches = matches
+    
+    # Read from csv, expecting format: matchId, timestamp, team1, team2, outcome
+    def __init__(self, matches_csv_path: str):
+        self.matches = []
+        with open(matches_csv_path, 'r') as f:
+            for line in f:
+                matchId, timestamp, team1, team2, outcome = line.split(',')
+                self.matches.append(Match(int(matchId), int(timestamp), Team(team1), Team(team2), Outcome(outcome)))
+
+    # Split dataset into two, according to timestamp
+    def split(self, train_ratio: float):
+        self.matches.sort(key=lambda match: match.timestamp)
+        split_idx = int(len(self.matches) * train_ratio)
+        return MatchDataset(self.matches[:split_idx]), MatchDataset(self.matches[split_idx:])
 
     def __len__(self):
         return len(self.matches)
