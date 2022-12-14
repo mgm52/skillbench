@@ -24,10 +24,11 @@ pip install -r requirements.txt
 - Implement TrueSkill & Glicko for comparison
 
 ### Simulator
-- Decide on a acquisition function???
+- Decide on an acquisition function???
 
 ---
 
 ## Unknowns
 - Do we model skill on a per-player basis or a per-team basis?
-- How do we handle changing rosters?
+  - If per-team: how do we handle changing rosters?
+- Implementation of all the TODOs :)
