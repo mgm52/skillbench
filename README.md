@@ -1,5 +1,16 @@
 # L48-true-skill-gp
 
+
+## Installation
+
+Tested on Python 3.9.7.
+
+```
+conda create -n venv
+conda activate venv
+pip install -r requirements.txt
+```
+
 ---
 
 ## Ideas

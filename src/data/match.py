@@ -8,7 +8,6 @@ class Team:
     def __repr__(self):
         return f"Team({self.name})"
 
-# Define an outcome enum (team1/team2/draw)
 class Outcome(Enum):
     TEAM1 = 1
     TEAM2 = 2

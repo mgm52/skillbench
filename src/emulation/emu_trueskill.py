@@ -1,4 +1,5 @@
-from emulation import Emulator
+from emulator import Emulator
+from trueskill import TrueSkill
 
 # An example emulator.
 class TrueSkillEmulator(Emulator):
