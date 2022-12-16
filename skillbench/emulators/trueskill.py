@@ -1,8 +1,9 @@
-from emulator import Emulator
+from .. import Emulator
 from trueskill import TrueSkill
 import itertools
 import math
-from data.match import Team, Outcome
+
+from skillbench.data import Team, Outcome
 
 # An example emulator.
 class TrueSkillEmulator(Emulator):

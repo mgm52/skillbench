@@ -1,7 +1,5 @@
-from simulation.simulator import Simulator
-from emulation.emu_trueskill import TrueSkillEmulator
-from data.match import MatchDataset
-from data.download import download_matches
+from skillbench import Simulator, MatchDataset, download_matches
+from skillbench.emulators import TrueSkillEmulator
 
 download_matches("data/matches.csv")
 dataset = MatchDataset("data/matches.csv")

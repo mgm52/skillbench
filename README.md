@@ -3,14 +3,15 @@
 
 ## Installation
 
-Tested on Python 3.9.7.
+`pip install -e .` will install an editable version of Skillbench from the sources here, and install any required dependencies
 
+Optional: first make a new virtualenv
 ```
 conda create -n venv
 conda activate venv
-pip install -r requirements.txt
 ```
 
+Tested on Python 3.9.7.
 ---
 
 ## Ideas

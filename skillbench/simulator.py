@@ -1,7 +1,8 @@
 import random
-from data.match import MatchDataset
-from emulation.emulator import Emulator
 import sklearn.metrics
+
+from skillbench.emulator import Emulator
+from skillbench.data import MatchDataset
 
 class Simulator:
   def __init__(self, dataset: MatchDataset):

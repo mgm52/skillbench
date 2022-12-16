@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
-from data.match import Team, Outcome
+
+from skillbench.data import Team, Outcome
 
 # Abstract class representing an emulator. Trueskill and others can subclass this
 class Emulator(ABC):
