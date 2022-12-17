@@ -11,14 +11,14 @@ conda create -n venv
 conda activate venv
 ```
 
-Tested on Python 3.9.7.
+Tested on Python 3.9.15.
 ---
 
 ## Ideas
 
 ### Data collection
-- Source from HLTV
-- Scrape using BeautifulSoup?
+- Source from HLTV - sadly no official api exists
+- Scrape using BeautifulSoup
 
 ### Emulator
 - GP mapping from (team, team) to (win probability) ??
