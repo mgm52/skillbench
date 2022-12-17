@@ -29,7 +29,8 @@ def download_matches():
             day[1] = day[1][:-2]
             day = " ".join(day)
             day = datetime.datetime.strptime(day, "%B %d %Y")
-            for match in days_results.find_all("div", class_="result"):
+            for match in days_results.find_all("div", class_="result-con"):
+                match_id = match.find("a", class_="a-reset")["href"].split("/")[2]
                 team1 = match.find("div", class_="team1")
                 team2 = match.find("div", class_="team2")
                 team_won = team1.find("div", class_="team-won")
@@ -43,7 +44,7 @@ def download_matches():
                 score_won = match.find("span", {"class": "score-won"}).text
                 score_lost = match.find("span", {"class": "score-lost"}).text
                 # print(f"{team_won} {score_won} - {score_lost} {team_lost} on {day}")
-                matches.append((day, team_won, score_won, score_lost, team_lost))
+                matches.append((day, match_id, team_won, score_won, score_lost, team_lost))
         time.sleep(0.5)
     print("Done downloading matches")
     return matches
