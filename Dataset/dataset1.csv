@@ -1,0 +1,400 @@
+date,team_won,team_lost,score_won,score_lost2022-12-16 00:00:00,G2,2,1,Vitality
+2022-12-16 00:00:00,Liquid,2,1,Natus Vincere
+2022-12-15 00:00:00,OG,2,0,Vitality
+2022-12-15 00:00:00,Natus Vincere,2,1,Heroic
+2022-12-15 00:00:00,FaZe,2,1,Liquid
+2022-12-15 00:00:00,G2,2,0,Outsiders
+2022-12-14 00:00:00,Vitality,2,0,Natus Vincere
+2022-12-14 00:00:00,OG,2,1,Heroic
+2022-12-14 00:00:00,FaZe,2,1,G2
+2022-12-14 00:00:00,Liquid,2,1,Outsiders
+2022-12-12 00:00:00,Spirit,2,1,Sprout
+2022-11-27 00:00:00,Heroic,2,1,FaZe
+2022-11-27 00:00:00,FaZe,2,1,Ninjas in Pyjamas
+2022-11-26 00:00:00,Heroic,2,1,Liquid
+2022-11-26 00:00:00,Ninjas in Pyjamas,2,1,Natus Vincere
+2022-11-25 00:00:00,Heroic,2,1,G2
+2022-11-24 00:00:00,Liquid,2,1,Natus Vincere
+2022-11-24 00:00:00,FaZe,2,0,Heroic
+2022-11-24 00:00:00,Ninjas in Pyjamas,2,0,OG
+2022-11-23 00:00:00,Liquid,2,0,G2
+2022-11-23 00:00:00,Heroic,2,1,Ninjas in Pyjamas
+2022-11-23 00:00:00,FaZe,2,0,OG
+2022-11-20 00:00:00,fnatic,2,0,BIG
+2022-11-19 00:00:00,fnatic,2,0,Astralis
+2022-11-18 00:00:00,Astralis,2,1,ENCE
+2022-11-17 00:00:00,fnatic,16,12,Bad News Eagles
+2022-11-17 00:00:00,fnatic,16,7,Astralis
+2022-11-17 00:00:00,Astralis,19,16,Bad News Eagles
+2022-11-16 00:00:00,ENCE,16,9,BIG
+2022-11-13 00:00:00,Outsiders,2,0,Heroic
+2022-11-13 00:00:00,Heroic,2,1,FURIA
+2022-11-12 00:00:00,Outsiders,2,1,MOUZ
+2022-11-12 00:00:00,FURIA,2,1,Natus Vincere
+2022-11-11 00:00:00,Heroic,2,0,Spirit
+2022-11-11 00:00:00,MOUZ,2,1,Cloud9
+2022-11-10 00:00:00,Outsiders,2,0,fnatic
+2022-11-09 00:00:00,Spirit,2,1,Liquid
+2022-11-08 00:00:00,Natus Vincere,2,0,BIG
+2022-11-08 00:00:00,MOUZ,2,1,ENCE
+2022-11-08 00:00:00,Heroic,2,1,Liquid
+2022-11-07 00:00:00,ENCE,2,0,Vitality
+2022-11-07 00:00:00,fnatic,2,0,BIG
+2022-11-07 00:00:00,Outsiders,2,0,MOUZ
+2022-11-06 00:00:00,FURIA,2,0,BIG
+2022-11-06 00:00:00,Cloud9,2,0,Heroic
+2022-11-06 00:00:00,Outsiders,16,14,Spirit
+2022-11-06 00:00:00,fnatic,16,7,ENCE
+2022-11-06 00:00:00,MOUZ,19,17,Vitality
+2022-11-06 00:00:00,Liquid,16,14,Natus Vincere
+2022-11-06 00:00:00,Outsiders,16,12,Ninjas in Pyjamas
+2022-11-06 00:00:00,Heroic,16,2,fnatic
+2022-11-06 00:00:00,FURIA,16,13,Spirit
+2022-11-06 00:00:00,Cloud9,16,14,Natus Vincere
+2022-11-06 00:00:00,Vitality,16,6,FaZe
+2022-11-05 00:00:00,BIG,16,7,MOUZ
+2022-11-05 00:00:00,FURIA,16,6,ENCE
+2022-11-05 00:00:00,fnatic,16,13,Ninjas in Pyjamas
+2022-11-05 00:00:00,Natus Vincere,25,21,Vitality
+2022-11-05 00:00:00,Heroic,16,9,Outsiders
+2022-11-05 00:00:00,Cloud9,16,14,FaZe
+2022-11-05 00:00:00,MOUZ,16,2,Liquid
+2022-11-03 00:00:00,Vitality,2,1,OG
+2022-11-02 00:00:00,Outsiders,2,0,fnatic
+2022-11-02 00:00:00,Cloud9,2,0,Imperial
+2022-11-01 00:00:00,MOUZ,2,1,fnatic
+2022-11-01 00:00:00,FURIA,19,16,OG
+2022-11-01 00:00:00,Outsiders,16,12,Vitality
+2022-11-01 00:00:00,fnatic,16,13,OG
+2022-10-31 00:00:00,fnatic,19,17,Cloud9
+2022-10-31 00:00:00,Vitality,16,9,Imperial
+2022-10-31 00:00:00,BIG,19,16,FURIA
+2022-10-31 00:00:00,MOUZ,16,6,Outsiders
+2022-10-23 00:00:00,Heroic,2,0,Astralis
+2022-10-21 00:00:00,Astralis,2,1,Vitality
+2022-10-19 00:00:00,Astralis,2,1,Eternal Fire
+2022-10-16 00:00:00,Outsiders,2,0,ENCE
+2022-10-16 00:00:00,Outsiders,2,1,MOUZ
+2022-10-14 00:00:00,MOUZ,16,8,Movistar Riders
+2022-10-14 00:00:00,ENCE,16,14,Outsiders
+2022-10-09 00:00:00,Heroic,2,1,OG
+2022-10-09 00:00:00,Spirit,2,1,Cloud9
+2022-10-09 00:00:00,Heroic,2,1,Vitality
+2022-10-08 00:00:00,OG,2,1,Outsiders
+2022-10-08 00:00:00,Vitality,2,1,MOUZ
+2022-10-08 00:00:00,Heroic,2,0,BIG
+2022-10-07 00:00:00,fnatic,2,0,Eternal Fire
+2022-10-07 00:00:00,ENCE,2,0,BIG
+2022-10-06 00:00:00,Natus Vincere,2,0,Outsiders
+2022-10-06 00:00:00,Liquid,2,1,Complexity
+2022-10-06 00:00:00,Ninjas in Pyjamas,2,1,Cloud9
+2022-10-05 00:00:00,Natus Vincere,16,11,MOUZ
+2022-10-05 00:00:00,Outsiders,16,12,Heroic
+2022-10-05 00:00:00,BIG,16,10,Vitality
+2022-10-05 00:00:00,Cloud9,16,13,G2
+2022-10-05 00:00:00,FaZe,19,17,fnatic
+2022-10-05 00:00:00,Astralis,16,9,Eternal Fire
+2022-10-04 00:00:00,MOUZ,16,10,OG
+2022-10-04 00:00:00,Ninjas in Pyjamas,16,12,Astralis
+2022-10-03 00:00:00,Vitality,3,2,Liquid
+2022-10-01 00:00:00,Vitality,2,0,G2
+2022-10-01 00:00:00,Liquid,2,1,Cloud9
+2022-09-30 00:00:00,G2,2,1,Natus Vincere
+2022-09-30 00:00:00,Vitality,2,0,Outsiders
+2022-09-29 00:00:00,Cloud9,2,1,FaZe
+2022-09-29 00:00:00,Liquid,2,0,MOUZ
+2022-09-29 00:00:00,Natus Vincere,2,1,Heroic
+2022-09-28 00:00:00,Outsiders,2,1,FURIA
+2022-09-27 00:00:00,FaZe,2,1,Complexity
+2022-09-25 00:00:00,Liquid,2,0,Cloud9
+2022-09-24 00:00:00,Cloud9,2,0,FURIA
+2022-09-23 00:00:00,FURIA,2,1,Liquid
+2022-09-23 00:00:00,Cloud9,2,0,Movistar Riders
+2022-09-22 00:00:00,FURIA,2,0,Movistar Riders
+2022-09-22 00:00:00,Liquid,2,1,Movistar Riders
+2022-09-18 00:00:00,Heroic,2,1,Astralis
+2022-09-17 00:00:00,Astralis,2,0,ENCE
+2022-09-16 00:00:00,MOUZ,2,0,ENCE
+2022-09-15 00:00:00,Heroic,2,0,ENCE
+2022-09-15 00:00:00,Astralis,2,0,MOUZ
+2022-09-14 00:00:00,MOUZ,2,0,Heroic
+2022-09-11 00:00:00,FaZe,2,0,BIG
+2022-09-11 00:00:00,G2,2,0,Outsiders
+2022-09-10 00:00:00,G2,2,0,FaZe
+2022-09-09 00:00:00,FaZe,2,1,Outsiders
+2022-09-08 00:00:00,G2,2,0,BIG
+2022-09-07 00:00:00,Outsiders,2,0,BIG
+2022-09-04 00:00:00,Ninjas in Pyjamas,2,1,Natus Vincere
+2022-09-04 00:00:00,Vitality,2,0,Spirit
+2022-09-03 00:00:00,Vitality,2,1,Natus Vincere
+2022-09-02 00:00:00,Spirit,2,0,Ninjas in Pyjamas
+2022-09-01 00:00:00,Vitality,2,0,Ninjas in Pyjamas
+2022-08-31 00:00:00,Natus Vincere,2,0,Spirit
+2022-08-29 00:00:00,G2,2,1,Vitality
+2022-08-28 00:00:00,Ninjas in Pyjamas,2,1,Heroic
+2022-08-28 00:00:00,FaZe,2,1,Astralis
+2022-08-27 00:00:00,Natus Vincere,2,0,Vitality
+2022-08-27 00:00:00,Liquid,2,0,Heroic
+2022-08-27 00:00:00,OG,2,0,Astralis
+2022-08-26 00:00:00,Vitality,2,1,G2
+2022-08-26 00:00:00,Liquid,2,0,Ninjas in Pyjamas
+2022-08-26 00:00:00,OG,2,1,FaZe
+2022-08-25 00:00:00,G2,2,0,BIG
+2022-08-21 00:00:00,Heroic,16,10,FaZe
+2022-08-21 00:00:00,Heroic,16,14,BIG
+2022-08-21 00:00:00,FaZe,16,10,Heroic
+2022-08-21 00:00:00,Heroic,16,13,BIG
+2022-08-20 00:00:00,Natus Vincere,16,4,Liquid
+2022-08-20 00:00:00,Natus Vincere,16,14,G2
+2022-08-20 00:00:00,Liquid,16,12,G2
+2022-08-19 00:00:00,Astralis,19,17,Vitality
+2022-08-19 00:00:00,Astralis,16,9,Ninjas in Pyjamas
+2022-08-19 00:00:00,Astralis,16,9,OG
+2022-08-19 00:00:00,Vitality,16,12,Ninjas in Pyjamas
+2022-08-19 00:00:00,Ninjas in Pyjamas,16,10,Astralis
+2022-08-19 00:00:00,Vitality,16,11,OG
+2022-08-13 00:00:00,FaZe,2,0,OG
+2022-07-17 00:00:00,FaZe,3,2,Natus Vincere
+2022-07-16 00:00:00,FaZe,2,0,Movistar Riders
+2022-07-16 00:00:00,Natus Vincere,2,0,Astralis
+2022-07-16 00:00:00,Movistar Riders,2,1,Liquid
+2022-07-15 00:00:00,Astralis,2,1,MOUZ
+2022-07-10 00:00:00,Liquid,2,0,FURIA
+2022-07-10 00:00:00,FaZe,2,0,Astralis
+2022-07-10 00:00:00,Natus Vincere,2,1,Movistar Riders
+2022-07-10 00:00:00,MOUZ,2,1,Ninjas in Pyjamas
+2022-07-10 00:00:00,FURIA,2,1,Spirit
+2022-07-10 00:00:00,Liquid,2,0,Cloud9
+2022-07-10 00:00:00,Ninjas in Pyjamas,2,1,G2
+2022-07-09 00:00:00,MOUZ,2,1,Vitality
+2022-07-09 00:00:00,FaZe,2,0,Spirit
+2022-07-09 00:00:00,Astralis,2,0,Cloud9
+2022-07-09 00:00:00,FURIA,2,0,Outsiders
+2022-07-08 00:00:00,Movistar Riders,2,1,Vitality
+2022-07-08 00:00:00,G2,2,0,ENCE
+2022-07-08 00:00:00,MOUZ,2,0,Heroic
+2022-07-08 00:00:00,Natus Vincere,2,0,Ninjas in Pyjamas
+2022-07-08 00:00:00,Astralis,2,0,FURIA
+2022-07-07 00:00:00,Spirit,2,1,Liquid
+2022-07-07 00:00:00,Cloud9,2,0,Outsiders
+2022-07-07 00:00:00,Natus Vincere,2,1,MOUZ
+2022-07-07 00:00:00,Vitality,2,1,ENCE
+2022-07-07 00:00:00,Ninjas in Pyjamas,2,0,Heroic
+2022-07-07 00:00:00,Movistar Riders,2,0,G2
+2022-07-06 00:00:00,Astralis,2,1,BIG
+2022-07-05 00:00:00,Movistar Riders,2,0,Vitality
+2022-07-05 00:00:00,Outsiders,2,0,BIG
+2022-07-05 00:00:00,Heroic,2,1,MOUZ
+2022-07-05 00:00:00,Movistar Riders,16,13,MIBR
+2022-07-05 00:00:00,Outsiders,16,6,Imperial
+2022-07-03 00:00:00,Movistar Riders,2,1,Outsiders
+2022-07-01 00:00:00,Movistar Riders,16,3,MIBR
+2022-06-30 00:00:00,BIG,2,1,FaZe
+2022-06-29 00:00:00,FaZe,2,1,Astralis
+2022-06-29 00:00:00,BIG,2,0,Cloud9
+2022-06-28 00:00:00,Astralis,2,0,forZe
+2022-06-28 00:00:00,FaZe,2,0,ENCE
+2022-06-26 00:00:00,FaZe,2,1,OG
+2022-06-25 00:00:00,FURIA,2,0,Outsiders
+2022-06-24 00:00:00,ENCE,2,1,MOUZ
+2022-06-24 00:00:00,BIG,2,1,FaZe
+2022-06-24 00:00:00,Cloud9,2,0,Astralis
+2022-06-23 00:00:00,MOUZ,2,0,Imperial
+2022-06-23 00:00:00,Astralis,2,0,Movistar Riders
+2022-06-22 00:00:00,FaZe,2,0,OG
+2022-06-19 00:00:00,Natus Vincere,2,0,Vitality
+2022-06-19 00:00:00,Vitality,2,1,G2
+2022-06-17 00:00:00,Vitality,2,0,ENCE
+2022-06-17 00:00:00,Natus Vincere,2,0,FaZe
+2022-06-16 00:00:00,Natus Vincere,2,0,BIG
+2022-06-16 00:00:00,G2,2,1,FaZe
+2022-06-15 00:00:00,ENCE,2,0,BIG
+2022-06-15 00:00:00,G2,2,1,Vitality
+2022-06-11 00:00:00,Heroic,2,0,Astralis
+2022-06-11 00:00:00,Ninjas in Pyjamas,2,1,MOUZ
+2022-06-11 00:00:00,Heroic,2,0,BIG
+2022-06-10 00:00:00,Astralis,2,0,BIG
+2022-06-10 00:00:00,MOUZ,2,0,Movistar Riders
+2022-06-09 00:00:00,Astralis,2,1,Imperial
+2022-06-05 00:00:00,Cloud9,3,0,ENCE
+2022-06-05 00:00:00,Cloud9,2,1,BIG
+2022-06-04 00:00:00,ENCE,2,0,FURIA
+2022-06-04 00:00:00,Cloud9,2,1,FaZe
+2022-06-03 00:00:00,FURIA,2,1,G2
+2022-06-02 00:00:00,BIG,2,1,FURIA
+2022-06-02 00:00:00,Cloud9,2,0,Liquid
+2022-06-02 00:00:00,ENCE,2,1,FaZe
+2022-06-01 00:00:00,G2,2,0,Vitality
+2022-06-01 00:00:00,Cloud9,2,0,Ninjas in Pyjamas
+2022-06-01 00:00:00,G2,2,1,Astralis
+2022-05-31 00:00:00,FURIA,2,0,Cloud9
+2022-05-31 00:00:00,Liquid,2,0,Imperial
+2022-05-31 00:00:00,FaZe,2,0,Vitality
+2022-05-31 00:00:00,ENCE,2,0,G2
+2022-05-30 00:00:00,BIG,16,10,Ninjas in Pyjamas
+2022-05-30 00:00:00,Cloud9,16,6,Liquid
+2022-05-30 00:00:00,FURIA,16,9,Imperial
+2022-05-30 00:00:00,Vitality,16,12,Astralis
+2022-05-30 00:00:00,ENCE,16,9,MOUZ
+2022-05-30 00:00:00,G2,16,5,Movistar Riders
+2022-05-22 00:00:00,FaZe,2,0,Natus Vincere
+2022-05-21 00:00:00,Natus Vincere,2,0,ENCE
+2022-05-21 00:00:00,FaZe,2,0,Spirit
+2022-05-20 00:00:00,Natus Vincere,2,1,Heroic
+2022-05-20 00:00:00,ENCE,2,0,Copenhagen Flames
+2022-05-19 00:00:00,Spirit,2,0,FURIA
+2022-05-19 00:00:00,FaZe,2,1,Ninjas in Pyjamas
+2022-05-17 00:00:00,Copenhagen Flames,2,0,Imperial
+2022-05-17 00:00:00,FURIA,2,1,G2
+2022-05-17 00:00:00,Heroic,2,1,Vitality
+2022-05-17 00:00:00,Imperial,2,1,Cloud9
+2022-05-16 00:00:00,ENCE,2,1,Heroic
+2022-05-16 00:00:00,G2,2,1,Outsiders
+2022-05-16 00:00:00,Ninjas in Pyjamas,2,0,FURIA
+2022-05-16 00:00:00,Vitality,2,1,BIG
+2022-05-16 00:00:00,FaZe,2,1,Copenhagen Flames
+2022-05-15 00:00:00,Natus Vincere,2,1,Ninjas in Pyjamas
+2022-05-15 00:00:00,Vitality,2,0,Liquid
+2022-05-15 00:00:00,FaZe,16,8,Cloud9
+2022-05-15 00:00:00,FURIA,16,10,BIG
+2022-05-15 00:00:00,Heroic,19,17,G2
+2022-05-15 00:00:00,ENCE,16,8,Outsiders
+2022-05-14 00:00:00,Ninjas in Pyjamas,16,14,Cloud9
+2022-05-14 00:00:00,Natus Vincere,16,8,BIG
+2022-05-14 00:00:00,FURIA,16,9,Liquid
+2022-05-14 00:00:00,Copenhagen Flames,16,8,ENCE
+2022-05-14 00:00:00,Outsiders,16,8,Vitality
+2022-05-14 00:00:00,Natus Vincere,19,17,G2
+2022-05-14 00:00:00,ENCE,16,8,FaZe
+2022-05-14 00:00:00,Cloud9,16,12,Outsiders
+2022-05-14 00:00:00,Ninjas in Pyjamas,16,4,Vitality
+2022-05-14 00:00:00,Heroic,16,11,Liquid
+2022-05-12 00:00:00,Liquid,2,0,Astralis
+2022-05-10 00:00:00,G2,2,1,ENCE
+2022-05-09 00:00:00,Vitality,16,8,Astralis
+2022-05-09 00:00:00,ENCE,16,6,Outsiders
+2022-05-09 00:00:00,G2,16,6,Liquid
+2022-05-04 00:00:00,MOUZ,2,0,BIG
+2022-05-04 00:00:00,Entropiq,2,1,BIG
+2022-05-04 00:00:00,MOUZ,2,0,Copenhagen Flames
+2022-05-03 00:00:00,BIG,2,1,MOUZ
+2022-05-02 00:00:00,Entropiq,2,1,Copenhagen Flames
+2022-05-02 00:00:00,MOUZ,2,0,Movistar Riders
+2022-05-02 00:00:00,Entropiq,2,0,fnatic
+2022-05-01 00:00:00,ENCE,2,1,Astralis
+2022-04-30 00:00:00,Astralis,2,0,Ninjas in Pyjamas
+2022-04-29 00:00:00,ENCE,2,1,Heroic
+2022-04-28 00:00:00,Astralis,2,0,Movistar Riders
+2022-04-27 00:00:00,ENCE,2,1,Copenhagen Flames
+2022-04-24 00:00:00,Ninjas in Pyjamas,2,1,ENCE
+2022-04-23 00:00:00,G2,2,1,Astralis
+2022-04-22 00:00:00,Copenhagen Flames,2,0,Ninjas in Pyjamas
+2022-04-22 00:00:00,Players,2,1,Astralis
+2022-04-21 00:00:00,Astralis,16,11,ENCE
+2022-04-20 00:00:00,Vitality,2,1,MOUZ
+2022-04-19 00:00:00,FaZe,2,0,MOUZ
+2022-04-19 00:00:00,Natus Vincere,2,0,Vitality
+2022-04-18 00:00:00,BIG,2,0,FaZe
+2022-04-18 00:00:00,Heroic,2,1,Natus Vincere
+2022-04-18 00:00:00,MOUZ,16,12,Outsiders
+2022-04-17 00:00:00,BIG,16,8,Outsiders
+2022-04-17 00:00:00,Natus Vincere,16,5,OG
+2022-04-17 00:00:00,Heroic,16,9,fnatic
+2022-04-17 00:00:00,FaZe,16,14,Vitality
+2022-04-17 00:00:00,OG,16,12,MOUZ
+2022-04-10 00:00:00,FaZe,3,1,ENCE
+2022-04-09 00:00:00,FaZe,2,0,FURIA
+2022-04-09 00:00:00,ENCE,2,0,Ninjas in Pyjamas
+2022-04-08 00:00:00,FaZe,2,0,Natus Vincere
+2022-04-08 00:00:00,FURIA,2,1,Astralis
+2022-04-07 00:00:00,ENCE,2,1,Movistar Riders
+2022-04-06 00:00:00,Astralis,2,1,Entropiq
+2022-04-05 00:00:00,FaZe,2,1,Players
+2022-04-05 00:00:00,ENCE,2,0,fnatic
+2022-04-03 00:00:00,Natus Vincere,2,0,Heroic
+2022-04-02 00:00:00,Natus Vincere,2,1,Astralis
+2022-03-31 00:00:00,Heroic,2,1,Astralis
+2022-03-29 00:00:00,SKADE,2,0,Copenhagen Flames
+2022-03-28 00:00:00,SKADE,2,0,Vitality
+2022-03-28 00:00:00,Copenhagen Flames,2,0,ENCE
+2022-03-26 00:00:00,HEET,19,16,fnatic
+2022-03-26 00:00:00,ENCE,16,12,fnatic
+2022-03-26 00:00:00,fnatic,16,11,HEET
+2022-03-25 00:00:00,Players,2,0,BIG
+2022-03-20 00:00:00,FaZe,2,1,FURIA
+2022-03-20 00:00:00,Vitality,2,0,Outsiders
+2022-03-19 00:00:00,FaZe,2,0,Vitality
+2022-03-19 00:00:00,FURIA,2,1,ENCE
+2022-03-18 00:00:00,ENCE,2,0,Outsiders
+2022-03-18 00:00:00,FURIA,2,1,Vitality
+2022-03-17 00:00:00,Outsiders,2,0,FaZe
+2022-03-17 00:00:00,ENCE,2,0,Vitality
+2022-03-17 00:00:00,K23,2,1,Copenhagen Flames
+2022-03-16 00:00:00,FURIA,2,1,Outsiders
+2022-03-16 00:00:00,Heroic,2,0,Copenhagen Flames
+2022-03-16 00:00:00,ENCE,2,1,FaZe
+2022-03-16 00:00:00,Copenhagen Flames,2,0,SKADE
+2022-03-13 00:00:00,G2,2,0,Ninjas in Pyjamas
+2022-03-13 00:00:00,Entropiq,2,1,G2
+2022-03-11 00:00:00,Ninjas in Pyjamas,2,1,MOUZ
+2022-03-10 00:00:00,Ninjas in Pyjamas,2,0,Entropiq
+2022-03-10 00:00:00,MOUZ,2,0,G2
+2022-03-09 00:00:00,Entropiq,2,0,MOUZ
+2022-03-04 00:00:00,ENCE,2,0,Entropiq
+2022-02-27 00:00:00,FaZe,3,0,G2
+2022-02-26 00:00:00,FaZe,2,0,Heroic
+2022-02-26 00:00:00,G2,2,0,Natus Vincere
+2022-02-25 00:00:00,FaZe,2,0,Gambit
+2022-02-25 00:00:00,G2,2,0,Virtus.pro
+2022-02-24 00:00:00,Entropiq,1,0,ECSTATIC
+2022-02-20 00:00:00,Natus Vincere,2,1,FaZe
+2022-02-20 00:00:00,G2,2,1,Astralis
+2022-02-20 00:00:00,Gambit,2,0,Ninjas in Pyjamas
+2022-02-20 00:00:00,Heroic,2,0,Virtus.pro
+2022-02-20 00:00:00,G2,2,1,FURIA
+2022-02-20 00:00:00,Astralis,2,1,fnatic
+2022-02-19 00:00:00,Gambit,2,0,Vitality
+2022-02-19 00:00:00,FaZe,2,1,fnatic
+2022-02-19 00:00:00,Natus Vincere,2,0,FURIA
+2022-02-18 00:00:00,Gambit,2,1,Copenhagen Flames
+2022-02-18 00:00:00,Virtus.pro,2,1,Ninjas in Pyjamas
+2022-02-18 00:00:00,Heroic,2,0,Vitality
+2022-02-18 00:00:00,fnatic,2,1,G2
+2022-02-17 00:00:00,FURIA,2,0,Astralis
+2022-02-17 00:00:00,Ninjas in Pyjamas,2,1,Gambit
+2022-02-17 00:00:00,Heroic,2,1,OG
+2022-02-17 00:00:00,Virtus.pro,2,0,Copenhagen Flames
+2022-02-16 00:00:00,fnatic,2,1,BIG
+2022-02-15 00:00:00,Astralis,2,1,BIG
+2022-02-15 00:00:00,Copenhagen Flames,2,0,Ninjas in Pyjamas
+2022-02-15 00:00:00,Copenhagen Flames,16,7,fnatic
+2022-02-09 00:00:00,HEET,2,1,Copenhagen Flames
+2022-02-06 00:00:00,BIG,2,0,Astralis
+2022-02-06 00:00:00,Natus Vincere,2,0,Ninjas in Pyjamas
+2022-02-06 00:00:00,FaZe,2,1,BIG
+2022-02-05 00:00:00,OG,2,1,Ninjas in Pyjamas
+2022-02-05 00:00:00,Vitality,2,1,G2
+2022-02-04 00:00:00,BIG,2,0,Astralis
+2022-02-04 00:00:00,Ninjas in Pyjamas,2,1,Natus Vincere
+2022-02-02 00:00:00,K23,2,0,Copenhagen Flames
+2022-02-01 00:00:00,K23,2,1,Heroic
+2022-02-01 00:00:00,Copenhagen Flames,2,1,Eternal Fire
+2022-01-31 00:00:00,FaZe,16,10,Vitality
+2022-01-30 00:00:00,Vitality,19,15,FaZe
+2022-01-29 00:00:00,OG,16,8,Astralis
+2022-01-29 00:00:00,Astralis,19,17,Natus Vincere
+2022-01-29 00:00:00,OG,16,8,Astralis
+2022-01-28 00:00:00,G2,22,19,Ninjas in Pyjamas
+2022-01-28 00:00:00,Ninjas in Pyjamas,16,9,BIG
+2022-01-28 00:00:00,G2,16,6,Ninjas in Pyjamas
+2022-01-28 00:00:00,Ninjas in Pyjamas,16,12,BIG
+2022-01-25 00:00:00,K23,2,1,ECSTATIC
+2022-01-24 00:00:00,Gambit,2,0,Entropiq
+2022-01-24 00:00:00,Entropiq,2,1,BIG
+2022-01-23 00:00:00,Gambit,2,0,BIG
+2022-01-23 00:00:00,Entropiq,2,1,ECSTATIC
+2022-01-22 00:00:00,Entropiq,2,1,Astralis
+2022-01-21 00:00:00,Gambit,2,1,Entropiq
+2022-01-20 00:00:00,Astralis,2,1,fnatic
+2022-01-19 00:00:00,BIG,2,1,fnatic
+2022-01-18 00:00:00,Entropiq,2,0,ECSTATIC
