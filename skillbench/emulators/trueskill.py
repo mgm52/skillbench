@@ -12,6 +12,11 @@ class TrueSkillEmulator(Emulator):
     self.ratings = {}
 
   def emulate(self, team1, team2):
+    # Replace teams by their rating
+    # Currently one rating per team
+    team1 = [self.ratings.get(team1, self.ts.Rating())]
+    team2 = [self.ratings.get(team2, self.ts.Rating())]
+
     # TODO: decide whether we're modelling each team as a list of players (as this func is currently written) or a single player
     # TODO: alter this function to use self.ratings, rather than expecting rating to be in team1 and team2 already
     # This function was written by Juho Snellman https://github.com/sublee/trueskill/issues/1#issuecomment-149762508
@@ -21,10 +26,22 @@ class TrueSkillEmulator(Emulator):
     denom = math.sqrt(size * (self.ts.beta * self.ts.beta) + sum_sigma)
     return self.ts.cdf(delta_mu / denom)
 
-  def fit_one_match(team1: Team, team2: Team, outcome: Outcome):
+  def fit_one_match(self, team1: Team, team2: Team, outcome: Outcome):
     # TODO: use outcome to update rating of each team (i.e. self.ratings)
-    pass
+    rating1 = self.ratings.get(team1, self.ts.Rating())
+    rating2 = self.ratings.get(team2, self.ts.Rating())
+
+    if outcome == Outcome.TEAM1:
+      new_ratings = self.ts.rate([(rating1,), (rating2,)])
+    elif outcome == Outcome.TEAM2:
+      new_ratings = self.ts.rate([(rating2,), (rating1,)])[::-1] # order of ratings is reversed
+    else:
+      new_ratings = self.ts.rate([(rating1,), (rating2,)], drawn=True)
+    print(new_ratings)
+    
+    self.ratings[team1] = new_ratings[0][0]
+    self.ratings[team2] = new_ratings[1][0]
   
   def aquisition_function(self, team1, team2):
     # TODO: use a better aquisition function
-    return math.abs(0.5 - self.emulate(team1, team2))
+    return abs(0.5 - self.emulate(team1, team2))

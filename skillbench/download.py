@@ -1,11 +1,12 @@
 # Get match data from the HLTV.org
 import time
-from bs4 import BeautifulSoup
-import requests
 import datetime
 import csv
 
 def download_matches():
+    from bs4 import BeautifulSoup
+    import requests
+
     print("Downloading matches...")
     matches = []
     for page in range(4):
@@ -49,9 +50,10 @@ def download_matches():
     print("Done downloading matches")
     return matches
 
-matches = download_matches()
+if __name__ == '__main__':
+    matches = download_matches()
 
-with open('../Dataset/dataset1.csv', 'a') as dataset:
-    writer = csv.writer(dataset)
-    for row in matches:
-        writer.writerow(row)
+    with open('../Dataset/dataset1.csv', 'a') as dataset:
+        writer = csv.writer(dataset)
+        for row in matches:
+            writer.writerow(row)

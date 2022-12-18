@@ -1,5 +1,6 @@
 from typing import List
 from enum import Enum
+import pandas as pd
 
 class Team:
     def __init__(self, name: str):
@@ -7,6 +8,12 @@ class Team:
 
     def __repr__(self):
         return f"Team({self.name})"
+
+    def __eq__(self, other):
+        return self.name == other.name
+
+    def __hash__(self):
+        return hash(self.name)
 
 class Outcome(Enum):
     TEAM1 = 1
@@ -31,13 +38,37 @@ class MatchDataset:
     def __init__(self, matches: List[Match]):
         self.matches = matches
     
+    def __init__(self, matches: List[Match]):
+        self.matches = matches
+
+    def __iter__(self):
+        return iter(self.matches)
+
     # Read from csv, expecting format: matchId, timestamp, team1, team2, outcome
-    def __init__(self, matches_csv_path: str):
-        self.matches = []
-        with open(matches_csv_path, 'r') as f:
-            for line in f:
-                matchId, timestamp, team1, team2, outcome = line.split(',')
-                self.matches.append(Match(int(matchId), int(timestamp), Team(team1), Team(team2), Outcome(outcome)))
+    @classmethod
+    def from_csv(cls, matches_csv_path: str):
+        matches = []
+
+        df = pd.read_csv(matches_csv_path)
+        print(df)
+        if set(df.columns).issuperset(set(['date', 'id', 'team_won', 'team_lost', 'score_won', 'score_lost'])):
+            for _, row in df.iterrows():
+                if row['score_won'] > row['score_lost']:
+                    outcome = Outcome.TEAM1
+                else:
+                    outcome = Outcome.DRAW
+                matches.append(Match(int(row['id']), row['date'], Team(row['team_won']), Team(row['team_lost']), outcome))
+
+        return cls(matches)
+
+        # with open(matches_csv_path, 'r') as f:
+            # for line in f:
+                # matchId, timestamp, team_won, team_lost, score_won, score_lost = line.split(',')
+                # if score_won > score_lost:
+                #     outcome = Outcome.TEAM1
+                # else:
+                #     outcome = Outcome.DRAW
+                # self.matches.append(Match(int(matchId), int(timestamp), Team(team_won), Team(team_lost), outcome))
 
     # Split dataset into two, according to timestamp
     def split(self, train_ratio: float):
@@ -55,5 +86,5 @@ class MatchDataset:
         return iter(self.matches)
 
     def __repr__(self):
-        return f"MatchDataset({self.matches})"
+        return f"<MatchDataset: {len(self.matches)} matches>"
 
