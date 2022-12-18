@@ -43,7 +43,7 @@ class Simulator:
         emu2 = emulator.emulate(match.team2, match.team1)
         acc.append(emu1 > emu2)
 
-    print(np.mean(acc))
+    return np.mean(acc)
 
     # print(outcomes, emulated_outcomes)
     # return sklearn.metrics.log_loss(outcomes, emulated_outcomes)

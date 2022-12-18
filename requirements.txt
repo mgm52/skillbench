@@ -3,4 +3,5 @@ requests~=2.25.1
 lxml>=4.9.1
 beautifulsoup4>=4.11.1
 matplotlib>=3.3.4
-bs4
+pandas>=1.2.4
+trueskill>=0.4.5

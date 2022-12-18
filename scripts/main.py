@@ -12,4 +12,5 @@ eval_sim = Simulator(eval_dataset)
 emu = TrueSkillEmulator(mu=25, sigma=8.333)
 
 train_sim.fit_emulator(emu, n_evals=300)
-print(eval_sim.evaluate_emulator(emu))
+accuracy = eval_sim.evaluate_emulator(emu)
+print(f"Accuracy: {accuracy:.2%}")
