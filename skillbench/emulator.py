@@ -18,3 +18,8 @@ class Emulator(ABC):
   def aquisition_function(team1: Team, team2: Team) -> float:
     "The emulator's desire for to know the outcome of this match. The emulator gets given the match it most wants to see"
     pass
+
+  @property
+  @abstractmethod
+  def name(self) -> str:
+    pass

@@ -1,5 +1,4 @@
 import random
-import sklearn.metrics
 import numpy as np
 from collections import defaultdict
 
@@ -31,9 +30,8 @@ class Simulator:
       
       emulator.fit_one_match(*top_matchup, outcome)
 
-  def evaluate_emulator(self, emulator: Emulator):
-    outcomes = []
-    emulated_outcomes = []
+  def evaluate_emulator(self, emulator: Emulator, visualize=False):
+    prediction_certainty_correct = []
     acc = []
     for match in self.dataset:
       if match.outcome != Outcome.DRAW: # Don't evaluate draws
@@ -41,9 +39,43 @@ class Simulator:
         # outcomes.extend([1, 0])
         emu1 = emulator.emulate(match.team1, match.team2)
         emu2 = emulator.emulate(match.team2, match.team1)
-        acc.append(emu1 > emu2)
+        correct = (emu1 > emu2) == (match.outcome == Outcome.TEAM1)
+        acc.append(correct)
+        if visualize:
+          prediction = f"{match.team1.name}>{match.team2.name}" if emu1 > emu2 else f"{match.team2.name}>{match.team1.name}"
+          # Check whether prediction exists in prediction_certainty_correct already
+          certainty = abs(emu1 - emu2)
+          prediction_certainty_correct.append((prediction, certainty, correct))
+    accuracy = np.mean(acc)
 
-    return np.mean(acc)
+    if visualize:
+      import matplotlib.pyplot as plt
+      import matplotlib.font_manager as fm
+      # Sort by certainty
+      prediction_certainty_correct.sort(key=lambda x: x[1], reverse=True)
+      predictions = [x[0] for x in prediction_certainty_correct]
 
-    # print(outcomes, emulated_outcomes)
-    # return sklearn.metrics.log_loss(outcomes, emulated_outcomes)
+      # Workaround to allow multiple rows with same label
+      positions = range(len(predictions))
+
+      # Plot as a bar chart with color based on correct/incorrect
+      plt.figure(figsize=(10, 10))
+      plt.barh(
+        positions,
+        [x[1] for x in prediction_certainty_correct],
+        color=["g" if x[2] else "r" for x in prediction_certainty_correct],
+        label="_hid")
+
+      # Workaround to add both colours to legend
+      plt.scatter([], [], c="g", label="Correct")
+      plt.scatter([], [], c="r", label="Incorrect")
+      plt.legend(["Correct", "Incorrect"])
+
+      plt.title(f"{emulator.name}'s predictions, {accuracy:.2%} accuracy")
+      plt.yticks(positions, predictions)
+      plt.xlabel("Certainty")
+      plt.ylabel("Prediction")
+      plt.grid(axis="x")
+      plt.show()
+
+    return accuracy
