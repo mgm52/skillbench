@@ -23,6 +23,14 @@ class Outcome(Enum):
     def __repr__(self):
         return f"Outcome({self.name})"
 
+def flip_outcome(outcome: Outcome):
+    if outcome == Outcome.TEAM1:
+        return Outcome.TEAM2
+    elif outcome == Outcome.TEAM2:
+        return Outcome.TEAM1
+    else:
+        return Outcome.DRAW
+
 class Match:
     def __init__(self, matchId: int, timestamp: int, team1: Team, team2: Team, outcome: Outcome):
         self.matchId = matchId

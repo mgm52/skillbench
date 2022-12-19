@@ -3,15 +3,23 @@ import numpy as np
 from collections import defaultdict
 
 from skillbench.emulator import Emulator
-from skillbench.data import MatchDataset, Outcome
+from skillbench.data import MatchDataset, Outcome, flip_outcome
 
 class Simulator:
   def __init__(self, dataset: MatchDataset):
-    self.matchups_all = defaultdict(list)
+    # Flip the outcome for every other match in dataset
     self.dataset = dataset
+    for i in range(len(dataset.matches)):
+      if i % 2 == 1:
+        dataset.matches[i].outcome = flip_outcome(dataset.matches[i].outcome)
+        dataset.matches[i].team1, dataset.matches[i].team2 = dataset.matches[i].team2, dataset.matches[i].team1
+
+    # Create a dictionary of all matchups and their outcomes
+    self.matchups_all = defaultdict(list)
     for match in dataset.matches:
       self.matchups_all[(match.team1, match.team2)].append(match.outcome)
-      self.matchups_all[(match.team2, match.team1)].append(match.outcome)
+      self.matchups_all[(match.team2, match.team1)].append(flip_outcome(match.outcome))
+    
     self.matchups_left = self.matchups_all.copy()
 
   def fit_emulator(self, emulator: Emulator, n_evals: int):
