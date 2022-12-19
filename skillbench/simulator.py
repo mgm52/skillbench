@@ -8,11 +8,12 @@ from skillbench.data import MatchDataset, Outcome, flip_outcome
 class Simulator:
   def __init__(self, dataset: MatchDataset):
     # Flip the outcome for every other match in dataset
+    # TODO: copy dataset an in immutable way!
     self.dataset = dataset
-    for i in range(len(dataset.matches)):
-      if i % 2 == 1:
-        dataset.matches[i].outcome = flip_outcome(dataset.matches[i].outcome)
-        dataset.matches[i].team1, dataset.matches[i].team2 = dataset.matches[i].team2, dataset.matches[i].team1
+    for i in range(1, len(self.dataset.matches)):
+      if self.dataset.matches[i].outcome == self.dataset.matches[i-1].outcome:
+        self.dataset.matches[i].outcome = flip_outcome(self.dataset.matches[i].outcome)
+        self.dataset.matches[i].team1, self.dataset.matches[i].team2 = self.dataset.matches[i].team2, self.dataset.matches[i].team1
 
     # Create a dictionary of all matchups and their outcomes
     self.matchups_all = defaultdict(list)
