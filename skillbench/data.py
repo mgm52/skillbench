@@ -20,6 +20,15 @@ class Outcome(Enum):
     TEAM2 = 2
     DRAW = 3
 
+    @classmethod
+    def score(cls, score1, score2):
+        if score1 > score2:
+            return cls.TEAM1
+        elif score1 < score2:
+            return cls.TEAM2
+        else:
+            return cls.DRAW
+
     def __repr__(self):
         return f"Outcome({self.name})"
 
@@ -61,11 +70,13 @@ class MatchDataset:
         print(df)
         if set(df.columns).issuperset(set(['date', 'id', 'team_won', 'team_lost', 'score_won', 'score_lost'])):
             for _, row in df.iterrows():
-                if row['score_won'] > row['score_lost']:
-                    outcome = Outcome.TEAM1
-                else:
-                    outcome = Outcome.DRAW
+                outcome = Outcome.score(row['score_won'], row['score_lost'])
                 matches.append(Match(int(row['id']), row['date'], Team(row['team_won']), Team(row['team_lost']), outcome))
+
+        elif set(df.columns).issuperset(set(['date', 'id', 'team1', 'team2', 'score1', 'score2'])):
+            for _, row in df.iterrows():
+                outcome = Outcome.score(row['score1'], row['score2'])
+                matches.append(Match(int(row['id']), row['date'], Team(row['team2']), Team(row['team1']), outcome))
 
         return cls(matches)
 

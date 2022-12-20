@@ -1,6 +1,8 @@
 import random
 import numpy as np
 from collections import defaultdict
+from tqdm import tqdm
+from typing import Optional
 
 from skillbench.emulator import Emulator
 from skillbench.data import MatchDataset, Outcome, flip_outcome
@@ -23,12 +25,15 @@ class Simulator:
     
     self.matchups_left = self.matchups_all.copy()
 
-  def fit_emulator(self, emulator: Emulator, n_evals: int):
+  def fit_emulator(self, emulator: Emulator, n_evals: int, max_aquisitions: Optional[int]=None):
     "Let the emulator choose N matches to learn from"
-    for i in range(n_evals):
+    for i in tqdm(range(n_evals)):
       # Let the emulator choose which match it wants to see next
       keys = self.matchups_left.keys()
       
+      if max_aquisitions:
+        keys = random.sample(list(keys), max_aquisitions)
+
       top_matchup = max(keys, key=lambda k: emulator.aquisition_function(*k))
       
       # When fitting a match, remove it from the dataset

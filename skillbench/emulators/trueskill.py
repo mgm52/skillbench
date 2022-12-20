@@ -31,11 +31,11 @@ class TrueSkillEmulator(Emulator):
     rating2 = self.ratings.get(team2, self.ts.Rating())
 
     if outcome == Outcome.TEAM1:
-      new_ratings = self.ts.rate([(rating1,), (rating2,)])
+      new_ratings = self.ts.rate([(rating1,), (rating2,)], ranks=[0, 1])
     elif outcome == Outcome.TEAM2:
-      new_ratings = self.ts.rate([(rating2,), (rating1,)])[::-1] # order of ratings is reversed
+      new_ratings = self.ts.rate([(rating1,), (rating2,)], ranks=[1, 0])
     else:
-      new_ratings = self.ts.rate([(rating1,), (rating2,)], drawn=True)
+      new_ratings = self.ts.rate([(rating1,), (rating2,)], ranks=[0, 0])
     #print(new_ratings)
     
     self.ratings[team1] = new_ratings[0][0]
