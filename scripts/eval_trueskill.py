@@ -1,4 +1,4 @@
-from skillbench import Simulator, MatchDataset, download_matches
+from skillbench import Simulator, MatchDataset, download_matches, flip_outcome
 from skillbench.emulators import TrueSkillEmulator, RandomEmulator, WinRateEmulator
 import matplotlib.pyplot as plt
 

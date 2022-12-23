@@ -1,3 +1,4 @@
+from collections import defaultdict
 from typing import List
 from enum import Enum
 import pandas as pd
@@ -54,9 +55,23 @@ class Match:
 class MatchDataset:
     def __init__(self, matches: List[Match]):
         self.matches = matches
-    
-    def __init__(self, matches: List[Match]):
-        self.matches = matches
+        self.matchups = defaultdict(list)
+        draws = 0
+        t1wins = 0
+        t2wins = 0
+        for match in matches:
+            if match.outcome == Outcome.DRAW:
+                draws += 1
+            elif match.outcome == Outcome.TEAM1:
+                t1wins += 1
+            elif match.outcome == Outcome.TEAM2:
+                t2wins += 1
+            self.matchups[(match.team1, match.team2)].append(match.outcome)
+            # TODO: stop appending flip outcome - if we're sure we can get away with this
+            # (Nicer solution would be if team1, team2 existed in an unordered set or something?)
+            self.matchups[(match.team2, match.team1)].append(flip_outcome(match.outcome))
+        
+        print(f"Loaded dataset of {len(matches)} matches ({100*t1wins/len(matches):.2g}% T1 wins, {100*t2wins/len(matches):.2g}% T2 wins, {100*draws/len(matches):.2g}% draws)")
 
     def __iter__(self):
         return iter(self.matches)
@@ -67,7 +82,7 @@ class MatchDataset:
         matches = []
 
         df = pd.read_csv(matches_csv_path)
-        print(df)
+        #print(df)
         if set(df.columns).issuperset(set(['date', 'id', 'team_won', 'team_lost', 'score_won', 'score_lost'])):
             for _, row in df.iterrows():
                 outcome = Outcome.score(row['score_won'], row['score_lost'])

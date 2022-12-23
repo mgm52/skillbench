@@ -10,20 +10,14 @@ from skillbench.data import MatchDataset, Outcome, flip_outcome
 class Simulator:
   def __init__(self, dataset: MatchDataset):
     # Flip the outcome for every other match in dataset
-    # TODO: copy dataset an in immutable way!
+    # TODO: copy dataset an in immutable way! And probably flip randomly instead.
     self.dataset = dataset
     for i in range(1, len(self.dataset.matches)):
       if self.dataset.matches[i].outcome == self.dataset.matches[i-1].outcome:
         self.dataset.matches[i].outcome = flip_outcome(self.dataset.matches[i].outcome)
         self.dataset.matches[i].team1, self.dataset.matches[i].team2 = self.dataset.matches[i].team2, self.dataset.matches[i].team1
-
-    # Create a dictionary of all matchups and their outcomes
-    self.matchups_all = defaultdict(list)
-    for match in dataset.matches:
-      self.matchups_all[(match.team1, match.team2)].append(match.outcome)
-      self.matchups_all[(match.team2, match.team1)].append(flip_outcome(match.outcome))
     
-    self.matchups_left = self.matchups_all.copy()
+    self.matchups_left = self.dataset.matchups.copy()
 
   def fit_emulator(self, emulator: Emulator, n_evals: int, max_aquisitions: Optional[int]=None):
     "Let the emulator choose N matches to learn from"
