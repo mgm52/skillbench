@@ -1,23 +1,16 @@
-import random
 import numpy as np
 from collections import defaultdict
 from tqdm import tqdm
 from typing import Optional
 
 from skillbench.emulator import Emulator
-from skillbench.data import MatchDataset, Outcome, flip_outcome
+from skillbench.data import MatchDataset
 
 class Simulator:
-  def __init__(self, dataset: MatchDataset):
-    # Flip the outcome for every other match in dataset
-    # TODO: copy dataset an in immutable way! And probably flip randomly instead.
-    self.dataset = dataset
-    for i in range(1, len(self.dataset.matches)):
-      if self.dataset.matches[i].outcome == self.dataset.matches[i-1].outcome:
-        self.dataset.matches[i].outcome = flip_outcome(self.dataset.matches[i].outcome)
-        self.dataset.matches[i].team1, self.dataset.matches[i].team2 = self.dataset.matches[i].team2, self.dataset.matches[i].team1
-    
-    self.matchups_left = self.dataset.matchups.copy()
+  def __init__(self, dataset: MatchDataset, random):
+    self.dataset = dataset.copy()
+    self.matchups_left = dict(self.dataset.matchups)
+    self.random = random
 
   def fit_emulator(self, emulator: Emulator, n_evals: int, max_aquisitions: Optional[int]=None):
     "Let the emulator choose N matches to learn from"
@@ -25,33 +18,36 @@ class Simulator:
       # Let the emulator choose which match it wants to see next
       keys = self.matchups_left.keys()
       
-      if max_aquisitions:
-        keys = random.sample(list(keys), max_aquisitions)
+      if max_aquisitions and len(keys) > max_aquisitions:
+        keys = self.random.sample(list(keys), max_aquisitions)
 
-      top_matchup = max(keys, key=lambda k: emulator.aquisition_function(*k))
+      top_matchup = max(keys, key=lambda k: emulator.aquisition_function(k))
       
       # When fitting a match, remove it from the dataset
-      pop_id = random.choice(range(len(self.matchups_left[top_matchup])))
-      outcome = self.matchups_left[top_matchup].pop(pop_id)
+      pop_id = self.random.choice(range(len(self.matchups_left[top_matchup])))
+      winner = self.matchups_left[top_matchup].pop(pop_id).winner
       if len(self.matchups_left[top_matchup]) == 0:
         self.matchups_left.pop(top_matchup)
       
-      emulator.fit_one_match(*top_matchup, outcome)
+      emulator.fit_one_match(top_matchup, winner)
+
+      if len(self.matchups_left) == 0:
+        print("Stopping training: no matches left")
+        break
 
   def evaluate_emulator(self, emulator: Emulator, visualize=False):
     prediction_certainty_correct = []
     acc = []
     for match in self.dataset:
-      if match.outcome != Outcome.DRAW: # Don't evaluate draws
-        # outcomes.append(match.outcome == Outcome.TEAM1)
-        # outcomes.extend([1, 0])
-        emu1 = emulator.emulate(match.team1, match.team2)
-        emu2 = emulator.emulate(match.team2, match.team1)
-        correct = (emu1 > emu2) == (match.outcome == Outcome.TEAM1)
+      if match.winner is not None: # Don't evaluate draws
+        # TODO: validate that this order is random
+        team1, team2 = match.teams
+        emu1 = emulator.emulate(team1, team2)
+        emu2 = emulator.emulate(team2, team1)
+        correct = (emu1 > emu2) == (match.winner == team1)
         acc.append(correct)
         if visualize:
-          prediction = f"{match.team1.name}>{match.team2.name}" if emu1 > emu2 else f"{match.team2.name}>{match.team1.name}"
-          # Check whether prediction exists in prediction_certainty_correct already
+          prediction = f"{team1.name}>{team2.name}" if emu1 > emu2 else f"{team2.name}>{team1.name}"
           certainty = abs(emu1 - emu2)
           prediction_certainty_correct.append((prediction, certainty, correct))
     accuracy = np.mean(acc)

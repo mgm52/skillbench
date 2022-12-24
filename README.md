@@ -14,6 +14,19 @@ conda activate venv
 Tested on Python 3.9.15.
 ---
 
+## Papers
+### Rating systems
+- [TrueSkill 2: An improved Bayesian skill rating system](https://www.microsoft.com/en-us/research/uploads/prod/2018/03/trueskill2.pdf)
+  - 2018
+- [Example of the Glicko-2 system](http://www.glicko.net/glicko/glicko2.pdf)
+  - 2022
+  - n.b. Glicko-2 was first described in [2001](http://www.glicko.net/research/dpcmsv.pdf)
+
+### Evaluation of rating systems
+- [The Evaluation of Rating Systems
+in Online Free-for-All Games](https://arxiv.org/pdf/2008.06787.pdf)
+  - 2020
+
 ## Ideas
 
 ### Data collection

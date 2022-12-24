@@ -11,87 +11,89 @@ class Team:
         return f"Team({self.name})"
 
     def __eq__(self, other):
-        return self.name == other.name
+        return False if other is None else self.name == other.name
 
     def __hash__(self):
         return hash(self.name)
 
-class Outcome(Enum):
-    TEAM1 = 1
-    TEAM2 = 2
-    DRAW = 3
-
-    @classmethod
-    def score(cls, score1, score2):
-        if score1 > score2:
-            return cls.TEAM1
-        elif score1 < score2:
-            return cls.TEAM2
-        else:
-            return cls.DRAW
+class TeamPair:
+    def __init__(self, team1: Team, team2: Team, random):
+        self._teams_set = frozenset((team1, team2))
+        if team1 == team2:
+            raise ValueError(f"Matchup must be between two different teams, not {team1} vs {team2}")
+        self._teams_list = random.sample(self._teams_set, 2)
 
     def __repr__(self):
-        return f"Outcome({self.name})"
+        return f"Matchup({self._teams_set})"
 
-def flip_outcome(outcome: Outcome):
-    if outcome == Outcome.TEAM1:
-        return Outcome.TEAM2
-    elif outcome == Outcome.TEAM2:
-        return Outcome.TEAM1
-    else:
-        return Outcome.DRAW
+    def __eq__(self, other):
+        return self._teams_set == other._teams_set
+
+    def __hash__(self):
+        return hash(self._teams_set)
+    
+    # Define how to iterate over a Matchup
+    def __iter__(self):
+        return iter(self._teams_list)
 
 class Match:
-    def __init__(self, matchId: int, timestamp: int, team1: Team, team2: Team, outcome: Outcome):
+    def __init__(self, matchId: int, timestamp: int, teams: TeamPair, winner: Team):
         self.matchId = matchId
         self.timestamp = timestamp
-        self.team1 = team1
-        self.team2 = team2
-        self.outcome = outcome
+        self.teams = teams
+        self.winner = winner
 
     def __repr__(self):
-        return f"Match({self.matchId}, {self.timestamp}, {self.team1}, {self.team2}, {self.outcome})"
+        return f"Match({self.matchId}, {self.timestamp}, {self.teams}, {self.winner})"
 
 class MatchDataset:
+    # TODO: validation that match ids are unique
     def __init__(self, matches: List[Match]):
         self.matches = matches
-        self.matchups = defaultdict(list)
+
+        self.matchups: dict[TeamPair, List[Match]] = defaultdict(list)
+        self.teams: dict[Team, List[Match]] = defaultdict(list)
         draws = 0
-        t1wins = 0
-        t2wins = 0
         for match in matches:
-            if match.outcome == Outcome.DRAW:
-                draws += 1
-            elif match.outcome == Outcome.TEAM1:
-                t1wins += 1
-            elif match.outcome == Outcome.TEAM2:
-                t2wins += 1
-            self.matchups[(match.team1, match.team2)].append(match.outcome)
-            # TODO: stop appending flip outcome - if we're sure we can get away with this
-            # (Nicer solution would be if team1, team2 existed in an unordered set or something?)
-            self.matchups[(match.team2, match.team1)].append(flip_outcome(match.outcome))
+            self.matchups[match.teams].append(match)
+            for team in match.teams:
+                self.teams[team].append(match)
+            if match.winner is None: draws += 1
         
-        print(f"Loaded dataset of {len(matches)} matches ({100*t1wins/len(matches):.2g}% T1 wins, {100*t2wins/len(matches):.2g}% T2 wins, {100*draws/len(matches):.2g}% draws)")
+        print(f"Loaded dataset of {len(matches)} matches ({100*draws/len(matches):.2g}% draws, {len(self.teams)} teams, at least {min(len(ms) for ms in self.teams.values())} matches per team)")
 
     def __iter__(self):
         return iter(self.matches)
+    
+    def copy(self):
+        print("Copying dataset")
+        return MatchDataset(self.matches.copy())
 
     # Read from csv, expecting format: matchId, timestamp, team1, team2, outcome
     @classmethod
-    def from_csv(cls, matches_csv_path: str):
+    def from_csv(cls, matches_csv_path: str, random):
+        print(f"Csv: {matches_csv_path}")
         matches = []
 
         df = pd.read_csv(matches_csv_path)
         #print(df)
         if set(df.columns).issuperset(set(['date', 'id', 'team_won', 'team_lost', 'score_won', 'score_lost'])):
             for _, row in df.iterrows():
-                outcome = Outcome.score(row['score_won'], row['score_lost'])
-                matches.append(Match(int(row['id']), row['date'], Team(row['team_won']), Team(row['team_lost']), outcome))
+                if row['team_won'] == row['team_lost']:
+                    print(f"WARNING: Match between same teams ({row['team_won']}), skipping")
+                    continue
+                winner = Team(row['team_won'])
+                matches.append(Match(int(row['id']), row['date'], TeamPair(Team(row['team1']), Team(row['team2']), random), winner))
 
         elif set(df.columns).issuperset(set(['date', 'id', 'team1', 'team2', 'score1', 'score2'])):
             for _, row in df.iterrows():
-                outcome = Outcome.score(row['score1'], row['score2'])
-                matches.append(Match(int(row['id']), row['date'], Team(row['team2']), Team(row['team1']), outcome))
+                if row['team1'] == row['team2']:
+                    print(f"WARNING: Match between same teams ({row['team1']}), skipping")
+                    continue
+                if row['score1'] > row['score2']: winner = Team(row['team1'])
+                elif row['score1'] < row['score2']: winner = Team(row['team2'])
+                else: winner = None
+                matches.append(Match(int(row['id']), row['date'], TeamPair(Team(row['team1']), Team(row['team2']), random), winner))
 
         return cls(matches)
 
@@ -106,6 +108,7 @@ class MatchDataset:
 
     # Split dataset into two, according to timestamp
     def split(self, train_ratio: float):
+        print(f"Split: {train_ratio}")
         self.matches.sort(key=lambda match: match.timestamp)
         split_idx = int(len(self.matches) * train_ratio)
         return MatchDataset(self.matches[:split_idx]), MatchDataset(self.matches[split_idx:])

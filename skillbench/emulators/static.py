@@ -5,13 +5,13 @@ import math
 import matplotlib.pyplot as plt
 from skillbench.data import Team, TeamPair
 
-class RandomEmulator(Emulator):
-  def __init__(self, random):
-    self.random = random
+class StaticEmulator(Emulator):
+  def __init__(self):
     pass
 
   def emulate(self, team1, team2):
-    return self.random.random()
+    # Randomness can still come from TeamPair's shuffling of team1, team2
+    return 1
 
   def fit_one_match(self, teams: TeamPair, winner: Team):
     pass
@@ -22,4 +22,4 @@ class RandomEmulator(Emulator):
   
   @property
   def name(self):
-    return "RandomEmulator"
+    return "StaticEmulator"

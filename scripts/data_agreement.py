@@ -1,4 +1,4 @@
-from skillbench import Simulator, MatchDataset, download_matches, flip_outcome, Outcome
+from skillbench import Simulator, MatchDataset, download_matches
 from skillbench.emulators import TrueSkillEmulator, RandomEmulator, WinRateEmulator
 import matplotlib.pyplot as plt
 
@@ -14,12 +14,12 @@ for split in [0.6, 0.7, 0.8, 0.9]:
     agreements = []
     for i in range(len(eval_dataset.matches)):
         em = eval_dataset.matches[i]
-        seen_outcomes = train_dataset.matchups.get((em.team1, em.team2)) or []
+        seen_outcomes = train_dataset.matchups.get(em.teams) or []
 
         if len(seen_outcomes) > 0:
             # We saw this matchup in training, at least once!
             # Note: agreement would improve by about 1% if we factor in draws too.
-            agrees = sum(1 for o in seen_outcomes if o == em.outcome)
+            agrees = sum(1 for m in seen_outcomes if m.winner == em.winner)
             agreements.append(agrees / len(seen_outcomes))
 
     print(f"Average agreement with matching matchups: {sum(agreements) / len(agreements):.4g}")

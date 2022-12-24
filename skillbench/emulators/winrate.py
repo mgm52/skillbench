@@ -3,7 +3,7 @@ from trueskill import TrueSkill
 import itertools
 import math
 import matplotlib.pyplot as plt
-from skillbench.data import Team, Outcome
+from skillbench.data import Team, TeamPair
 
 class WinRateEmulator(Emulator):
   def __init__(self):
@@ -18,18 +18,18 @@ class WinRateEmulator(Emulator):
     winprob = (wr1 - wr2) / 2 + 0.5
     return winprob
 
-  def fit_one_match(self, team1: Team, team2: Team, outcome: Outcome):
+  def fit_one_match(self, teams: TeamPair, winner: Team):
+    team1, team2 = teams
     self.totals[team1] = self.totals.get(team1, 0) + 1
     self.totals[team2] = self.totals.get(team2, 0) + 1
     self.maxtotal = max(self.maxtotal, self.totals[team1], self.totals[team2])
-    if outcome == Outcome.TEAM1:
-      self.wins[team1] = self.wins.get(team1, 0) + 1
-    elif outcome == Outcome.TEAM2:
-      self.wins[team2] = self.wins.get(team2, 0) + 1
+    if winner is not None:
+      self.wins[winner] = self.wins.get(winner, 0) + 1
     # Count draw as loss for both teams
   
-  def aquisition_function(self, team1, team2):
+  def aquisition_function(self, teams):
     # Preference for smaller totals
+    team1, team2 = teams
     return self.maxtotal - min(self.totals.get(team1, 0), self.totals.get(team2, 0))
   
   @property

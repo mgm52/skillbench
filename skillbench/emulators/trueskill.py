@@ -4,7 +4,7 @@ import itertools
 import math
 import matplotlib.pyplot as plt
 
-from skillbench.data import Team, Outcome
+from skillbench.data import Team, TeamPair
 
 class TrueSkillEmulator(Emulator):
   def __init__(self, mu, sigma):
@@ -25,14 +25,15 @@ class TrueSkillEmulator(Emulator):
     denom = math.sqrt(size * (self.ts.beta * self.ts.beta) + sum_sigma)
     return self.ts.cdf(delta_mu / denom)
 
-  def fit_one_match(self, team1: Team, team2: Team, outcome: Outcome):
+  def fit_one_match(self, teams: TeamPair, winner: Team):
     # Use outcome to update rating of each team (i.e. self.ratings)
+    team1, team2 = teams
     rating1 = self.ratings.get(team1, self.ts.Rating())
     rating2 = self.ratings.get(team2, self.ts.Rating())
 
-    if outcome == Outcome.TEAM1:
+    if winner == team1:
       new_ratings = self.ts.rate([(rating1,), (rating2,)], ranks=[0, 1])
-    elif outcome == Outcome.TEAM2:
+    elif winner == team2:
       new_ratings = self.ts.rate([(rating1,), (rating2,)], ranks=[1, 0])
     else:
       new_ratings = self.ts.rate([(rating1,), (rating2,)], ranks=[0, 0])
@@ -41,9 +42,9 @@ class TrueSkillEmulator(Emulator):
     self.ratings[team1] = new_ratings[0][0]
     self.ratings[team2] = new_ratings[1][0]
   
-  def aquisition_function(self, team1, team2):
+  def aquisition_function(self, teams):
     # TODO: use a better aquisition function
-    return abs(0.5 - self.emulate(team1, team2))
+    return abs(0.5 - self.emulate(*teams))
   
   @property
   def name(self):
