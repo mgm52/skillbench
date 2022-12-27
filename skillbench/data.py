@@ -3,6 +3,7 @@ from typing import List
 from enum import Enum
 import pandas as pd
 
+
 class Team:
     def __init__(self, name: str):
         self.name = name
@@ -15,6 +16,7 @@ class Team:
 
     def __hash__(self):
         return hash(self.name)
+
 
 class TeamPair:
     def __init__(self, team1: Team, team2: Team, random):
@@ -31,10 +33,11 @@ class TeamPair:
 
     def __hash__(self):
         return hash(self._teams_set)
-    
+
     # Define how to iterate over a Matchup
     def __iter__(self):
         return iter(self._teams_list)
+
 
 class Match:
     def __init__(self, matchId: int, timestamp: int, teams: TeamPair, winner: Team):
@@ -45,6 +48,7 @@ class Match:
 
     def __repr__(self):
         return f"Match({self.matchId}, {self.timestamp}, {self.teams}, {self.winner})"
+
 
 class MatchDataset:
     # TODO: validation that match ids are unique
@@ -59,12 +63,13 @@ class MatchDataset:
             for team in match.teams:
                 self.teams[team].append(match)
             if match.winner is None: draws += 1
-        
-        print(f"Loaded dataset of {len(matches)} matches ({100*draws/len(matches):.2g}% draws, {len(self.teams)} teams, at least {min(len(ms) for ms in self.teams.values())} matches per team)")
+
+        print(
+            f"Loaded dataset of {len(matches)} matches ({100 * draws / len(matches):.2g}% draws, {len(self.teams)} teams, at least {min(len(ms) for ms in self.teams.values())} matches per team)")
 
     def __iter__(self):
         return iter(self.matches)
-    
+
     def copy(self):
         print("Copying dataset")
         return MatchDataset(self.matches.copy())
@@ -76,35 +81,42 @@ class MatchDataset:
         matches = []
 
         df = pd.read_csv(matches_csv_path)
-        #print(df)
+        # print(df)
         if set(df.columns).issuperset(set(['date', 'id', 'team_won', 'team_lost', 'score_won', 'score_lost'])):
             for _, row in df.iterrows():
                 if row['team_won'] == row['team_lost']:
                     print(f"WARNING: Match between same teams ({row['team_won']}), skipping")
                     continue
                 winner = Team(row['team_won'])
-                matches.append(Match(int(row['id']), row['date'], TeamPair(Team(row['team1']), Team(row['team2']), random), winner))
+                matches.append(
+                    Match(int(row['id']), row['date'], TeamPair(Team(row['team1']), Team(row['team2']), random),
+                          winner))
 
         elif set(df.columns).issuperset(set(['date', 'id', 'team1', 'team2', 'score1', 'score2'])):
             for _, row in df.iterrows():
                 if row['team1'] == row['team2']:
                     print(f"WARNING: Match between same teams ({row['team1']}), skipping")
                     continue
-                if row['score1'] > row['score2']: winner = Team(row['team1'])
-                elif row['score1'] < row['score2']: winner = Team(row['team2'])
-                else: winner = None
-                matches.append(Match(int(row['id']), row['date'], TeamPair(Team(row['team1']), Team(row['team2']), random), winner))
+                if row['score1'] > row['score2']:
+                    winner = Team(row['team1'])
+                elif row['score1'] < row['score2']:
+                    winner = Team(row['team2'])
+                else:
+                    winner = None
+                matches.append(
+                    Match(int(row['id']), row['date'], TeamPair(Team(row['team1']), Team(row['team2']), random),
+                          winner))
 
         return cls(matches)
 
         # with open(matches_csv_path, 'r') as f:
-            # for line in f:
-                # matchId, timestamp, team_won, team_lost, score_won, score_lost = line.split(',')
-                # if score_won > score_lost:
-                #     outcome = Outcome.TEAM1
-                # else:
-                #     outcome = Outcome.DRAW
-                # self.matches.append(Match(int(matchId), int(timestamp), Team(team_won), Team(team_lost), outcome))
+        # for line in f:
+        # matchId, timestamp, team_won, team_lost, score_won, score_lost = line.split(',')
+        # if score_won > score_lost:
+        #     outcome = Outcome.TEAM1
+        # else:
+        #     outcome = Outcome.DRAW
+        # self.matches.append(Match(int(matchId), int(timestamp), Team(team_won), Team(team_lost), outcome))
 
     # Split dataset into two, according to timestamp
     def split(self, train_ratio: float):
@@ -124,4 +136,3 @@ class MatchDataset:
 
     def __repr__(self):
         return f"<MatchDataset: {len(self.matches)} matches>"
-

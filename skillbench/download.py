@@ -3,6 +3,7 @@ import time
 import datetime
 import csv
 
+
 def download_matches():
     from bs4 import BeautifulSoup
     import requests
@@ -49,6 +50,7 @@ def download_matches():
         time.sleep(0.5)
     print("Done downloading matches")
     return matches
+
 
 if __name__ == '__main__':
     matches = download_matches()
