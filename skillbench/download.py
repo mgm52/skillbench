@@ -57,8 +57,9 @@ def download_matches_per_player():
     import requests
 
     print("Downloading matches...")
+    start_time = time.time()
     matches = {}
-    for page in range(1):
+    for page in range(39):
         print(f"Downloading page {page}...")
 
         headers = {
@@ -76,24 +77,18 @@ def download_matches_per_player():
         for days_results in all_results.find_all("div", class_="results-sublist"):
             for match in days_results.find_all("div", class_="result-con"):
                 url_suffix = match.find("a", class_="a-reset")["href"]
-                match_id = match.find("a", class_="a-reset")["href"].split("/")[2]
+                match_id = int(match.find("a", class_="a-reset")["href"].split("/")[2])
                 match_stats = {}
                 sub_soup = BeautifulSoup(
                     requests.get(f"https://www.hltv.org{url_suffix}", headers=headers, cookies=cookies).text, "lxml")
 
                 try:
-                    match_stats["team1"] = sub_soup.find("div", class_="teamsBox").find("div",
-                                                                                        class_="team1-gradient").find(
-                        "div",
-                        class_="teamName").text
-                    match_stats["team2"] = sub_soup.find("div", class_="teamsBox").find("div",
-                                                                                        class_="team2-gradient").find(
-                        "div",
-                        class_="teamName").text
-                    match_stats["timestamp"] = int(
-                        sub_soup.find("div", class_="teamsBox").find("div", class_="timeAndEvent").find("div",
-                                                                                                        class_="date")[
-                            "data-unix"])
+                    match_stats["team1"] = sub_soup.find("div", class_="teamsBox")\
+                        .find("div",class_="team1-gradient").find("div",class_="teamName").text
+                    match_stats["team2"] = sub_soup.find("div", class_="teamsBox")\
+                        .find("div",class_="team2-gradient").find("div",class_="teamName").text
+                    match_stats["timestamp"] = int(sub_soup.find("div", class_="teamsBox")\
+                        .find("div", class_="timeAndEvent").find("div",class_="date")["data-unix"])
                     try:
                         match_stats["team1_score"] = int(sub_soup.find("div", class_="team1-gradient").find("div",
                                                                                                             class_="won").text)
@@ -105,13 +100,17 @@ def download_matches_per_player():
                         match_stats["team2_score"] = int(sub_soup.find("div", class_="team2-gradient").find("div",
                                                                                                             class_="won").text)
 
+                    match_stats["team1_id"] = int(sub_soup.find("div", class_="teamsBox").find("div", class_="team1-gradient").find("a")["href"].split("/")[2])
+                    match_stats["team2_id"] = int(sub_soup.find("div", class_="teamsBox").find("div", class_="team2-gradient").find("a")[ "href"].split("/")[2])
+
                 except:
                     print(url_suffix)
 
+                # print(match_stats)
                 maps = {}
                 for map in sub_soup.find_all("div", class_="mapholder"):
                     try:
-                        map_id = map.find("a", class_="results-stats")["href"].split("/")[4]
+                        map_id = int(map.find("a", class_="results-stats")["href"].split("/")[4])
                         team1_score = int(
                             map.find("div", class_="results-left").find("div", class_="results-team-score").text)
                         team2_score = int(
@@ -124,38 +123,55 @@ def download_matches_per_player():
                         continue
 
                 stats = sub_soup.find("div", class_="matchstats")
-                for div in stats.find_all("div", class_="stats-content"):
-                    if div["id"].split("-")[0] in maps:
-                        maps[div["id"].split("-")[0]]["stats"] = {}
-                        team1_players = {}
-                        team2_players = {}
-                        count = 0
-                        for team in div.find_all("table", class_="totalstats"):
-                            for player in team.find_all("tr"):
-                                if "header-row" in player["class"]:
-                                    count += 1
-                                    continue
-                                player_name = player.find("span", class_="player-nick").text
-                                player_stats = {}
-                                # print(player.find("td", class_="kd"))
-                                player_stats["kills"] = int(player.find("td", class_="kd").text.split("-")[0])
-                                player_stats["deaths"] = int(player.find("td", class_="kd").text.split("-")[1])
-                                player_stats["adr"] = float(player.find("td", class_="adr").text)
-                                player_stats["rating"] = float(player.find("td", class_="rating").text)
-                                if count == 1:
-                                    team1_players[player_name] = player_stats
-                                if count == 2:
-                                    team2_players[player_name] = player_stats
-                        # print(team1_players, team2_players)
-                        maps[div["id"].split("-")[0]]["stats"]["team1"] = team1_players
-                        maps[div["id"].split("-")[0]]["stats"]["team2"] = team2_players
-                        match_stats["maps"] = maps
+                try:
+                    for div in stats.find_all("div", class_="stats-content"):
+                        try:
+                            map_id = int(div["id"].split("-")[0])
+                        except:
+                            continue
+                        if map_id in maps:
+                            maps[map_id]["stats"] = {}
+                            team1_players = {}
+                            team2_players = {}
+                            count = 0
+                            for team in div.find_all("table", class_="totalstats"):
+                                for player in team.find_all("tr"):
+                                    if "header-row" in player["class"]:
+                                        count += 1
+                                        continue
+                                    player_name = player.find("span", class_="player-nick").text
+                                    player_id = int(player.find("a", class_="flagAlign")["href"].split("/")[2])
+                                    # print(player_id)
+                                    player_stats = {}
+                                    # print(player.find("td", class_="kd"))
+                                    player_stats["name"] = player_name
+                                    player_stats["kills"] = int(player.find("td", class_="kd").text.split("-")[0])
+                                    player_stats["deaths"] = int(player.find("td", class_="kd").text.split("-")[1])
+                                    player_stats["adr"] = float(player.find("td", class_="adr").text)
+                                    player_stats["rating"] = float(player.find("td", class_="rating").text)
+                                    if count == 1:
+                                        team1_players[player_id] = player_stats
+                                    if count == 2:
+                                        team2_players[player_id] = player_stats
+                            # print(team1_players, team2_players)
+                            maps[map_id]["stats"]["team1"] = team1_players
+                            maps[map_id]["stats"]["team2"] = team2_players
+                            match_stats["maps"] = maps
+                    matches[match_id] = match_stats
+                except AttributeError:
+                    # print(stats)
+                    # print(sub_soup)
+                    print(url_suffix)
+                    time.sleep(5)
 
-                matches[match_id] = match_stats
-                print(f"Downloaded match {match_id}")
+
+                # print(f"Downloaded match {match_id}")
                 time.sleep(0.5)
                 # break
             # break
+        current_time = time.time()
+        print(f"Downloaded page {page}, time elapsed = {current_time - start_time} seconds")
+
         time.sleep(2)
     print("Done downloading matches")
     return matches
@@ -163,7 +179,7 @@ def download_matches_per_player():
 
 if __name__ == '__main__':
     matches = download_matches_per_player()
-    print(json.dumps(matches, indent=4))
+    # print(json.dumps(matches, indent=4))
 
-    with open('../Dataset/dataset2.json', 'w', encoding='utf-8') as f:
+    with open('../Dataset/dataset3.json', 'w', encoding='utf-8') as f:
         json.dump(matches, f, ensure_ascii=False, indent=4)
