@@ -8,7 +8,7 @@ from skillbench.data import Team, TeamPair
 
 
 class TrueSkillEmulator(Emulator):
-    def __init__(self, mu, sigma):
+    def __init__(self, mu=25, sigma=25/3):
         self.ts = TrueSkill(mu, sigma)
         self.ratings = {}
 
