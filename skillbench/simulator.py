@@ -15,7 +15,12 @@ class Simulator:
 
     def fit_emulator(self, emulator: Emulator, n_evals: int, max_aquisitions: Optional[int] = None):
         "Let the emulator choose N matches to learn from"
-        for i in tqdm(range(n_evals)):
+        bar = tqdm if n_evals > 10 else lambda x: x
+        for i in bar(range(n_evals)):
+            if len(self.matchups_left) == 0:
+                print("Stopping training: no matches left")
+                break
+
             # Let the emulator choose which match it wants to see next
             keys = self.matchups_left.keys()
 
@@ -31,10 +36,6 @@ class Simulator:
                 self.matchups_left.pop(top_matchup)
 
             emulator.fit_one_match(top_matchup, winner)
-
-            if len(self.matchups_left) == 0:
-                print("Stopping training: no matches left")
-                break
 
     def evaluate_emulator(self, emulator: Emulator, visualize=False):
         prediction_certainty_correct = []

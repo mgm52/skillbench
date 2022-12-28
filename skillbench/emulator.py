@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 
 from skillbench.data import Team, TeamPair
+from typing import Optional
 
 
 # Abstract class representing an emulator. Trueskill and others can subclass this
@@ -11,7 +12,7 @@ class Emulator(ABC):
         pass
 
     @abstractmethod
-    def fit_one_match(teams: TeamPair, winner: Team):
+    def fit_one_match(teams: TeamPair, winner: Optional[Team]):
         "Given some ground truth match data, update the emulator's internals using it"
         pass
 
@@ -21,6 +22,5 @@ class Emulator(ABC):
         pass
 
     @property
-    @abstractmethod
     def name(self) -> str:
-        pass
+        return self.__class__.__name__

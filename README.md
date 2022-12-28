@@ -54,6 +54,18 @@ Strike: Global Offensive” Video Games](https://drive.google.com/file/d/1MxVIfO
 ### Simulator
 - Decide on an acquisition function???
 
+## Implementation references
+
+Both: https://github.com/mbhynes/skelo [2 stars]
+
+### Elo
+- https://github.com/ddm7018/Elo/blob/master/elosports/elo.py [39 stars]
+- https://github.com/sublee/elo/blob/master/elo.py [87 stars]
+### Glicko2
+- https://github.com/ryankirkman/pyglicko2 [22 stars]
+- https://github.com/deepy/glicko2 [19 stars]
+- https://github.com/sublee/glicko [15 stars, "DO NOT USE"]
+
 ---
 
 ## Unknowns
