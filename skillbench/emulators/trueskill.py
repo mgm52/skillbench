@@ -8,9 +8,14 @@ from skillbench.data import Team, TeamPair
 
 
 class TrueSkillEmulator(Emulator):
-    def __init__(self, mu=25, sigma=25/3):
+    def __init__(self, mu=25, sigma=25/3, acquisition="centre_prob"):
+        self.mu = mu
+        self.sigma = sigma
         self.ts = TrueSkill(mu, sigma)
         self.ratings = {}
+
+        assert acquisition in ["centre_prob", "ts"]
+        self.acquisition = acquisition
 
     def emulate(self, team1, team2):
         # Replace teams by their rating
@@ -45,11 +50,18 @@ class TrueSkillEmulator(Emulator):
 
     def aquisition_function(self, teams):
         # TODO: use a better aquisition function
-        return abs(0.5 - self.emulate(*teams))
+        if self.acquisition == "centre_prob":
+            return abs(0.5 - self.emulate(*teams))
+        elif self.acquisition == "ts":
+            # Get match quality from ts
+            team1, team2 = teams
+            rating1 = self.ratings.get(team1, self.ts.Rating())
+            rating2 = self.ratings.get(team2, self.ts.Rating())
+            return self.ts.quality([(rating1,), (rating2,)])
 
     @property
     def name(self):
-        return "TrueSkill"
+        return "TrueSkill({}, {}, {})".format(self.mu, self.sigma, self.acquisition)
 
     def visualize(self):
         teams = list(self.ratings.keys())

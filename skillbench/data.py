@@ -1,15 +1,20 @@
 from collections import defaultdict
-from typing import List
+from typing import List, Optional
 from enum import Enum
 import pandas as pd
+import json
 
 
 class Team:
-    def __init__(self, name: str):
+    def __init__(self, name: str, players: Optional[List[str]]=None):
         self.name = name
+        self.players = players
+
+    def has_players(self):
+        return self.players is not None
 
     def __repr__(self):
-        return f"Team({self.name})"
+        return f"Team({self.name}{'+' if self.has_players() else ''})"
 
     def __eq__(self, other):
         return False if other is None else self.name == other.name
@@ -109,14 +114,46 @@ class MatchDataset:
 
         return cls(matches)
 
-        # with open(matches_csv_path, 'r') as f:
-        # for line in f:
-        # matchId, timestamp, team_won, team_lost, score_won, score_lost = line.split(',')
-        # if score_won > score_lost:
-        #     outcome = Outcome.TEAM1
-        # else:
-        #     outcome = Outcome.DRAW
-        # self.matches.append(Match(int(matchId), int(timestamp), Team(team_won), Team(team_lost), outcome))
+    @classmethod
+    def from_json(cls, matches_json_path: str, random):
+        d = json.load(open(matches_json_path, 'r'))
+
+        matches = []
+
+        sorted_match_objects = sorted(d.items(), key=lambda match: match[1]['timestamp'])
+        for match_id, match in sorted_match_objects:
+            try:
+                # For our IDs, we combine the team ID and team names to have both globally unique and readable
+                team1_name = f"{match['team1_id']}-{match['team1']}"
+                team2_name = f"{match['team2_id']}-{match['team2']}"
+
+                # Combine players across maps
+                team1_players = set()
+                team2_players = set()
+                for map_id, map in match['maps'].items():
+                    for player_id, player_stats in map['stats']['team1'].items():
+                        team1_players.add(player_id + '-' + player_stats['name'])
+                    for player_id, player_stats in map['stats']['team2'].items():
+                        team2_players.add(player_id + '-' + player_stats['name'])
+
+                # Create teams
+                team1 = Team(team1_name, list(team1_players))
+                team2 = Team(team2_name, list(team2_players))
+
+                if match['team1_score'] > match['team2_score']:
+                    winner = team1
+                elif match['team1_score'] < match['team2_score']:
+                    winner = team2
+                else:
+                    winner = None
+
+                matches.append(Match(match_id, match['timestamp'], TeamPair(team1, team2, random), winner))
+            except Exception as e:
+                print(match_id, "failed to load.")
+                continue
+
+        return cls(matches)
+
 
     # Split dataset into two, according to timestamp
     def split(self, train_ratio: float):

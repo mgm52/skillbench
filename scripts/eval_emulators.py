@@ -9,10 +9,11 @@ import multiprocessing, pickle
 def run_seed(seed):
     random.seed(seed)
 
-    emus = [StaticEmulator(), RandomEmulator(random), WinRateEmulator(), EloEmulator(), TrueSkillEmulator()]
-    dataset = MatchDataset.from_csv("Dataset/csgo_34k.csv", random)
+    emus = [StaticEmulator(), RandomEmulator(random), WinRateEmulator(), EloEmulator(), TrueSkillEmulator(), TrueSkillEmulator(acquisition="ts")]
+    # dataset = MatchDataset.from_csv("Dataset/csgo_34k.csv", random)
+    dataset = MatchDataset.from_json("Dataset/dataset3.json", random)
 
-    train_dataset, eval_dataset = dataset.split(0.9)
+    train_dataset, eval_dataset = dataset.split(0.8)
 
     train_sims = [Simulator(train_dataset, random) for _ in emus]
     eval_sim = Simulator(eval_dataset, random)
@@ -22,7 +23,7 @@ def run_seed(seed):
     # emus = [emulator() for emulator in emulators]
 
     seed_results = defaultdict(list)
-    log_every = 200
+    log_every = 100
     max_aquisitions = 25
     logs = []
     for i in tqdm(range(len(train_dataset))):
@@ -42,7 +43,8 @@ def run_seed(seed):
     return seed_results
 
 if __name__ == '__main__':
-    pool = multiprocessing.Pool(10)
+    # run_seed(0)
+    pool = multiprocessing.Pool(8)
     all_results = pool.map(run_seed, range(8))
 
     with open("output/results.pkl", "wb") as f:
