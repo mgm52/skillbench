@@ -13,6 +13,9 @@ class Simulator:
         self.matchups_left = dict(self.dataset.matchups)
         self.random = random
 
+    def reset_data(self):
+        self.matchups_left = dict(self.dataset.matchups)
+
     def fit_emulator(self, emulator: Emulator, n_evals: int, max_aquisitions: Optional[int] = None):
         "Let the emulator choose N matches to learn from"
         bar = tqdm if n_evals > 10 else lambda x: x
