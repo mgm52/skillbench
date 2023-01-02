@@ -2,6 +2,7 @@ import random
 from skillbench import Simulator, MatchDataset, download_matches
 from skillbench.emulators import TrueSkillEmulator, RandomEmulator, WinRateEmulator, StaticEmulator
 import matplotlib.pyplot as plt
+from skillbench.acquirers import LikeliestDrawAcquisitionFunction
 
 ### SETUP ###
 # download_matches("data/matches.csv")
@@ -14,7 +15,7 @@ for seed in [0, 1, 2]:
     train_sim = Simulator(train_dataset, random)
     eval_sim = Simulator(eval_dataset, random)
 
-    emu = RandomEmulator(random)
+    emu = WinRateEmulator()
 
     ### TRAIN ###
     print(f"Training {emu.name} with seed {seed}")
@@ -25,7 +26,7 @@ for seed in [0, 1, 2]:
     e_accuracies = []
     logs = []
     for i in range(n_evals // log_every):
-        train_sim.fit_emulator(emu, n_evals=log_every, max_aquisitions=100)
+        train_sim.fit_emulator(emu, n_evals=log_every, acquisition_function=LikeliestDrawAcquisitionFunction(), max_aquisitions=100)
 
         t_accuracy = train_sim.evaluate_emulator(emu)
         t_accuracies.append(t_accuracy)

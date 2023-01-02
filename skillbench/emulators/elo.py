@@ -33,10 +33,6 @@ class EloEmulator(Emulator):
         else:
             pass # No update on draw
 
-    def aquisition_function(self, teams):
-        # TODO: use a better aquisition function
-        return abs(0.5 - self.emulate(*teams))
-
     @property
     def name(self):
         return "Elo"

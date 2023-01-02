@@ -5,6 +5,7 @@ from typing import Optional
 
 from skillbench.emulator import Emulator
 from skillbench.data import MatchDataset
+from skillbench.acquirer import AcquisitionFunction
 
 
 class Simulator:
@@ -16,7 +17,7 @@ class Simulator:
     def reset_data(self):
         self.matchups_left = dict(self.dataset.matchups)
 
-    def fit_emulator(self, emulator: Emulator, n_evals: int, max_aquisitions: Optional[int] = None):
+    def fit_emulator(self, emulator: Emulator, n_evals: int, acquisition_function: AcquisitionFunction, max_aquisitions: Optional[int] = None):        
         "Let the emulator choose N matches to learn from"
         bar = tqdm if n_evals > 10 else lambda x: x
         for i in bar(range(n_evals)):
@@ -30,7 +31,8 @@ class Simulator:
             if max_aquisitions and len(keys) > max_aquisitions:
                 keys = self.random.sample(list(keys), max_aquisitions)
 
-            top_matchup = max(keys, key=lambda k: emulator.aquisition_function(k))
+            # TODO: validate that this order is random? i.e. to avoid bias among equal values
+            top_matchup = max(keys, key=lambda k: acquisition_function(emulator, k))
 
             # When fitting a match, remove it from the dataset
             pop_id = self.random.choice(range(len(self.matchups_left[top_matchup])))

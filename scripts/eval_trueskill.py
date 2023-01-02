@@ -2,6 +2,7 @@ from skillbench import Simulator, MatchDataset, download_matches
 from skillbench.emulators import TrueSkillEmulator, RandomEmulator, WinRateEmulator
 import matplotlib.pyplot as plt
 import random
+from skillbench.acquirers import TSAcquisitionFunction
 
 ### SETUP ###
 # download_matches("data/matches.csv")
@@ -23,7 +24,7 @@ for mu in [10, 25, 40]:
     e_accuracies = []
     logs = []
     for i in range(n_evals // log_every):
-        train_sim.fit_emulator(emu, n_evals=log_every, max_aquisitions=100)
+        train_sim.fit_emulator(emu, n_evals=log_every, acquisition_function=TSAcquisitionFunction(), max_aquisitions=100)
 
         t_accuracy = train_sim.evaluate_emulator(emu)
         t_accuracies.append(t_accuracy)

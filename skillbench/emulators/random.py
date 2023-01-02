@@ -17,10 +17,6 @@ class RandomEmulator(Emulator):
     def fit_one_match(self, teams: TeamPair, winner: Team):
         pass
 
-    def aquisition_function(self, teams):
-        # No preference for any match
-        return 0.5
-
     @property
     def name(self):
         return "RandomEmulator"

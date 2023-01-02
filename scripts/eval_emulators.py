@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from tqdm import tqdm
 from collections import defaultdict
 import multiprocessing, pickle
+from skillbench.acquirers import LikeliestDrawAcquisitionFunction
 
 def run_seed(seed):
     random.seed(seed)
@@ -28,7 +29,7 @@ def run_seed(seed):
     logs = []
     for i in tqdm(range(len(train_dataset))):
         for train_sim, emu in zip(train_sims, emus):
-            train_sim.fit_emulator(emu, n_evals=1, max_aquisitions=max_aquisitions)
+            train_sim.fit_emulator(emu, n_evals=1, acquisition_function=LikeliestDrawAcquisitionFunction(), max_aquisitions=max_aquisitions)
 
             if i % log_every == 0:
                 acc_train = train_sim.evaluate_emulator(emu)

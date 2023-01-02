@@ -48,17 +48,6 @@ class TrueSkillEmulator(Emulator):
         self.ratings[team1] = new_ratings[0][0]
         self.ratings[team2] = new_ratings[1][0]
 
-    def aquisition_function(self, teams):
-        # TODO: use a better aquisition function
-        if self.acquisition == "centre_prob":
-            return abs(0.5 - self.emulate(*teams))
-        elif self.acquisition == "ts":
-            # Get match quality from ts
-            team1, team2 = teams
-            rating1 = self.ratings.get(team1, self.ts.Rating())
-            rating2 = self.ratings.get(team2, self.ts.Rating())
-            return self.ts.quality([(rating1,), (rating2,)])
-
     @property
     def name(self):
         return "TrueSkill({}, {}, {})".format(self.mu, self.sigma, self.acquisition)

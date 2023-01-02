@@ -16,11 +16,6 @@ class Emulator(ABC):
         "Given some ground truth match data, update the emulator's internals using it"
         pass
 
-    @abstractmethod
-    def aquisition_function(teams: TeamPair) -> float:
-        "The emulator's desire to know the outcome of this match. The emulator gets given the match it most wants to see"
-        pass
-
     @property
     def name(self) -> str:
         return self.__class__.__name__
