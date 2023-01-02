@@ -15,19 +15,21 @@ class EloEmulator(Emulator):
         self.ratings = defaultdict(lambda: self.mu)
 
     def emulate(self, team1, team2):
+        # Expected score of team1 in a match against team2
         exp = (self.ratings[team2] - self.ratings[team1]) / 400
         return 1 / (10 ** exp + 1)
 
     def fit_one_match(self, teams: TeamPair, winner: Optional[Team]):
         # Use outcome to update rating of each team (i.e. self.ratings)
         team1, team2 = teams
-        prob = self.emulate(team1, team2)
+        prob1 = self.emulate(team1, team2) # Probability of team1 winning
+        prob2 = self.emulate(team2, team1) # Probability of team2 winning
         if winner == team1:
-            self.ratings[team1] += self.k * (1 - prob)
-            self.ratings[team2] += self.k * (0 - prob)
+            self.ratings[team1] += self.k * (1 - prob1)
+            self.ratings[team2] += self.k * (0 - prob2)
         elif winner == team2:
-            self.ratings[team2] += self.k * (1 - prob)
-            self.ratings[team1] += self.k * (0 - prob)
+            self.ratings[team1] += self.k * (0 - prob1)
+            self.ratings[team2] += self.k * (1 - prob2)
         else:
             pass # No update on draw
 
