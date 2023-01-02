@@ -1,6 +1,6 @@
 import random
 from skillbench import Simulator, MatchDataset, download_matches
-from skillbench.emulators import TrueSkillEmulator, RandomEmulator, WinRateEmulator, StaticEmulator, EloEmulator
+from skillbench.emulators import Glicko2Emulator,TrueSkillEmulator, RandomEmulator, WinRateEmulator, StaticEmulator, EloEmulator
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 from collections import defaultdict
@@ -10,7 +10,7 @@ from skillbench.acquirers import LikeliestDrawAcquisitionFunction
 def run_seed(seed):
     random.seed(seed)
 
-    emus = [StaticEmulator(), RandomEmulator(random), WinRateEmulator(), EloEmulator(), TrueSkillEmulator(), TrueSkillEmulator(acquisition="ts")]
+    emus = [StaticEmulator(), RandomEmulator(random), WinRateEmulator(), EloEmulator(), TrueSkillEmulator(), Glicko2Emulator()]
     # dataset = MatchDataset.from_csv("Dataset/csgo_34k.csv", random)
     dataset = MatchDataset.from_json("Dataset/dataset3.json", random)
 
