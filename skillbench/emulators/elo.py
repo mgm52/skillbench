@@ -24,10 +24,10 @@ class EloEmulator(Emulator):
         prob = self.emulate(team1, team2)
         if winner == team1:
             self.ratings[team1] += self.k * (1 - prob)
-            self.ratings[team2] -= self.k * (1 - prob)
+            self.ratings[team2] += self.k * (0 - prob)
         elif winner == team2:
             self.ratings[team2] += self.k * (1 - prob)
-            self.ratings[team1] -= self.k * (1 - prob)
+            self.ratings[team1] += self.k * (0 - prob)
         else:
             pass # No update on draw
 

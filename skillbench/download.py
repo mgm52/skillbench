@@ -59,7 +59,7 @@ def download_matches_per_player():
     print("Downloading matches...")
     start_time = time.time()
     matches = {}
-    for page in range(39):
+    for page in range(100):
         print(f"Downloading page {page}...")
 
         headers = {
@@ -71,7 +71,7 @@ def download_matches_per_player():
             "hltvTimeZone": "Europe/London"
         }
 
-        url = f"https://www.hltv.org/results?offset={page * 100}&startDate=2017-01-01&endDate=2022-12-31&content=stats&stars=2"
+        url = f"https://www.hltv.org/results?offset={page * 100}&startDate=2017-01-01&endDate=2022-12-31&content=stats&stars=1"
         soup = BeautifulSoup(requests.get(url, headers=headers, cookies=cookies).text, "lxml")
         all_results = soup.find("div", {"class": "allres"})
         for days_results in all_results.find_all("div", class_="results-sublist"):
@@ -181,5 +181,5 @@ if __name__ == '__main__':
     matches = download_matches_per_player()
     # print(json.dumps(matches, indent=4))
 
-    with open('../Dataset/dataset3.json', 'w', encoding='utf-8') as f:
+    with open('../Dataset/dataset4.json', 'w', encoding='utf-8') as f:
         json.dump(matches, f, ensure_ascii=False, indent=4)
