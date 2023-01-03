@@ -2,7 +2,13 @@ import matplotlib.pyplot as plt
 import pickle
 import numpy as np
 
-all_results = pickle.load(open("output/results.pkl", "rb"))
+import argparse
+
+args = argparse.ArgumentParser()
+args.add_argument("-i", "--input", type=str, default="output/results.pkl")
+args = args.parse_args()
+
+all_results = pickle.load(open(args.input, "rb"))
 
 # 2 subplots for train and eval
 fig, axs = plt.subplots(1, 2, figsize=(15, 8), sharey=True)

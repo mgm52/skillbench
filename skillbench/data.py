@@ -89,7 +89,6 @@ class MatchDataset:
         return iter(self.matches)
 
     def copy(self):
-        print("Copying dataset")
         return MatchDataset(self.matches.copy())
 
     def filter_teams(self, min_games=1) -> "MatchDataset":
@@ -141,11 +140,12 @@ class MatchDataset:
         return cls(matches)
 
     @classmethod
-    def from_json(cls, matches_json_path: str, random):
+    def from_json(cls, matches_json_path: str, random, strict_loading=False):
         d = json.load(open(matches_json_path, 'r'))
 
         matches = []
 
+        fails = []
         sorted_match_objects = sorted(d.items(), key=lambda match: match[1]['timestamp'])
         for match_id, match in sorted_match_objects:
             try:
@@ -175,8 +175,14 @@ class MatchDataset:
 
                 matches.append(Match(match_id, match['timestamp'], TeamPair(team1, team2, random), winner))
             except Exception as e:
-                print(match_id, "failed to load.")
+                if strict_loading:
+                    raise e
+                # print(match_id, "failed to load.")
+                fails.append(match_id)
                 continue
+
+        if fails:
+            print(f"Failed to load {len(fails)} matches: {fails}")
 
         return cls(matches)
 
