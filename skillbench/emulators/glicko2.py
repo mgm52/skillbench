@@ -23,9 +23,12 @@ class Glicko2Emulator(Emulator):
             self.phi = phi
             self.sigma = sigma
 
+    def get_rating(self, team):
+        return self.ratings.get(team, self.Rating(self.mu, self.phi, self.sigma))
+
     def emulate(self, team1, team2):
-        r1 = self.ratings.get(team1, self.Rating(self.mu, self.phi, self.sigma))
-        r2 = self.ratings.get(team2, self.Rating(self.mu, self.phi, self.sigma))
+        r1 = self.get_rating(team1)
+        r2 = self.get_rating(team2)
 
         impact = self.reduce_impact(r2)
         expected_score = self.expect_score(r1, r2, impact)
@@ -112,7 +115,7 @@ class Glicko2Emulator(Emulator):
     def rate(self, team, result_and_other_team):
         # Step 2. For each player, convert the rating and RD's onto the
         #         Glicko-2 scale.
-        rating = self.ratings.get(team, self.Rating(self.mu, self.phi, self.sigma))
+        rating = self.get_rating(team)
         rating = self.scale_down(rating)
         # Step 3. Compute the quantity v. This is the estimated variance of the
         #         team's/player's rating based only on game outcomes.
@@ -127,7 +130,7 @@ class Glicko2Emulator(Emulator):
             self.ratings[team] = self.scale_up(self.Rating(rating.mu, phi_star, rating.sigma))
             return self.ratings[team]
         for actual_score, other_team in result_and_other_team:
-            other_rating = self.ratings.get(other_team, self.Rating(self.mu, self.phi, self.sigma))
+            other_rating = self.get_rating(other_team)
             other_rating = self.scale_down(other_rating)
             impact = self.reduce_impact(other_rating)
             expected_score = self.expect_score(rating, other_rating, impact)

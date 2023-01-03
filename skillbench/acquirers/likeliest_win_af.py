@@ -8,4 +8,6 @@ import random
 class LikeliestWinAcquisitionFunction(AcquisitionFunction):
     def __call__(self, emu: Emulator, teams: TeamPair) -> float:
         super().__call__(emu, teams)
-        return abs(0.5 - emu.emulate(*teams))
+        team1, team2 = teams
+        win_prob_diff = abs(emu.emulate(team1, team2) - emu.emulate(team2, team1))
+        return win_prob_diff
