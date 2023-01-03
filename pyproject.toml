@@ -15,5 +15,8 @@ classifiers = [
 ]
 dynamic = ["dependencies"]
 
+[tool.setuptools]
+packages = ["skillbench"]
+
 [tool.setuptools.dynamic]
 dependencies = {file = ["requirements.txt"]}
