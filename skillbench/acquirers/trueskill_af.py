@@ -12,7 +12,7 @@ class TSAcquisitionFunction(AcquisitionFunction):
         team1, team2 = teams
         rating1 = emu.ratings.get(team1, emu.ts.Rating())
         rating2 = emu.ratings.get(team2, emu.ts.Rating())
-        # NOTE: TODO: figure out how this works - docs say it's draw probability but source code seems more complex!
+        # NOTE: TODO: figure out how this (ts.quality) works - docs say it's draw probability but source code seems more complex!
         return emu.ts.quality([(rating1,), (rating2,)])
 
 if __name__ == "__main__":

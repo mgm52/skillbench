@@ -1,6 +1,6 @@
 import random
 from skillbench import Simulator, MatchDataset, download_matches
-from skillbench.emulators import Glicko2Emulator,TrueSkillEmulator, RandomEmulator, WinRateEmulator, StaticEmulator, EloEmulator
+from skillbench.emulators import Glicko2Emulator,TrueSkillEmulator, RandomEmulator, WinRateEmulator, StaticEmulator, EloEmulator, TrueSkillPlayersEmulator
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 from collections import defaultdict
@@ -10,11 +10,11 @@ from skillbench.acquirers import LikeliestDrawAcquisitionFunction
 def run_seed(seed):
     random.seed(seed)
 
-    emus = [StaticEmulator(), RandomEmulator(random), WinRateEmulator(), EloEmulator(), TrueSkillEmulator(), Glicko2Emulator()]
+    emus = [StaticEmulator(), RandomEmulator(random), WinRateEmulator(), EloEmulator(), TrueSkillEmulator(), TrueSkillPlayersEmulator(), Glicko2Emulator()]
     # dataset = MatchDataset.from_csv("Dataset/csgo_34k.csv", random)
-    dataset = MatchDataset.from_json("Dataset/dataset3.json", random)
+    dataset = MatchDataset.from_json("Dataset/dataset4.json", random)
 
-    train_dataset, eval_dataset = dataset.split(0.8)
+    train_dataset, eval_dataset = dataset.split(0.5)
 
     train_sims = [Simulator(train_dataset, random) for _ in emus]
     eval_sim = Simulator(eval_dataset, random)
@@ -47,6 +47,8 @@ if __name__ == '__main__':
     # run_seed(0)
     pool = multiprocessing.Pool(8)
     all_results = pool.map(run_seed, range(8))
+
+    # NOTE: all_results[seed][emulator_name] = [(train_accuracy, eval_accuracy), ...]
 
     with open("output/results.pkl", "wb") as f:
         pickle.dump(all_results, f)
