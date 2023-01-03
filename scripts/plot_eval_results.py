@@ -5,7 +5,7 @@ import numpy as np
 all_results = pickle.load(open("output/results.pkl", "rb"))
 
 # 2 subplots for train and eval
-fig, axs = plt.subplots(1, 2, figsize=(10, 10), sharey=True)
+fig, axs = plt.subplots(1, 2, figsize=(15, 8), sharey=True)
 
 avg_train = []
 min_train = []
@@ -28,15 +28,17 @@ for name in all_results[0].keys():
 
 for i, name in enumerate(all_results[0].keys()):
     axs[0].plot(avg_train[i], label=name)
-    axs[0].fill_between(range(len(avg_train[i])), min_train[i], max_train[i], alpha=0.2)
-    # axs[0].fill_between(range(len(avg_train[i])), np.array(avg_train[i]) - np.array(std_train[i]), np.array(avg_train[i]) + np.array(std_train[i]), alpha=0.2)
+    # axs[0].fill_between(range(len(avg_train[i])), min_train[i], max_train[i], alpha=0.2)
+    axs[0].fill_between(range(len(avg_train[i])), np.array(avg_train[i]) - np.array(std_train[i]), np.array(avg_train[i]) + np.array(std_train[i]), alpha=0.2)
     axs[1].plot(avg_eval[i], label=name)
-    axs[1].fill_between(range(len(avg_eval[i])), min_eval[i], max_eval[i], alpha=0.2)
-    # axs[1].fill_between(range(len(avg_eval[i])), np.array(avg_eval[i]) - np.array(std_eval[i]), np.array(avg_eval[i]) + np.array(std_eval[i]), alpha=0.2)
+    # axs[1].fill_between(range(len(avg_eval[i])), min_eval[i], max_eval[i], alpha=0.2)
+    axs[1].fill_between(range(len(avg_eval[i])), np.array(avg_eval[i]) - np.array(std_eval[i]), np.array(avg_eval[i]) + np.array(std_eval[i]), alpha=0.2)
 
 axs[0].set_title("Train accuracy")
 axs[1].set_title("Eval accuracy")
 axs[0].legend()
 axs[1].legend()
+axs[0].grid()
+axs[1].grid()
 fig.suptitle("Accuracy during training (min, max, avg)")
 plt.show()

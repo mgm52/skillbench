@@ -156,11 +156,17 @@ class MatchDataset:
 
 
     # Split dataset into two, according to timestamp
-    def split(self, train_ratio: float):
-        print(f"Split: {train_ratio}")
+    def split(self, train_ratio: float, random: Optional[int]=None):
+        from sklearn.model_selection import train_test_split
         self.matches.sort(key=lambda match: match.timestamp)
-        split_idx = int(len(self.matches) * train_ratio)
-        return MatchDataset(self.matches[:split_idx]), MatchDataset(self.matches[split_idx:])
+        if random:
+            print(f"Split: {train_ratio}, randomly with seed {random}")
+            train_matches, test_matches = train_test_split(self.matches, train_size=train_ratio, shuffle=True, random_state=random)
+        else:
+            print(f"Split: {train_ratio}, by timestamp")
+            train_matches, test_matches = train_test_split(self.matches, train_size=train_ratio, shuffle=False)
+
+        return MatchDataset(train_matches), MatchDataset(test_matches)
 
     def __len__(self):
         return len(self.matches)
