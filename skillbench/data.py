@@ -51,6 +51,19 @@ class Match:
         self.teams = teams
         self.winner = winner
 
+    @property
+    def team1(self):
+        return self.teams._teams_list[0]
+
+    @property
+    def team2(self):
+        return self.teams._teams_list[1]
+
+    @property
+    def loser(self):
+        if self.winner is None: return None
+        return self.team2 if self.winner == self.team1 else self.team1
+
     def __repr__(self):
         return f"Match({self.matchId}, {self.timestamp}, {self.teams}, {self.winner})"
 
@@ -78,6 +91,19 @@ class MatchDataset:
     def copy(self):
         print("Copying dataset")
         return MatchDataset(self.matches.copy())
+
+    def filter_teams(self, min_games=1) -> "MatchDataset":
+        """Filter out teams that have played less than min_games"""
+        team_counter = defaultdict(int)
+        for match in self.matches:
+            team_counter[match.team1] += 1
+            team_counter[match.team2] += 1
+
+        teams_to_keep = set(team for team, count in team_counter.items() if count >= min_games)
+        print(f"Filtering out teams with less than {min_games} games: {len(teams_to_keep)} teams remaining")
+
+        new_matches = [match for match in self.matches if match.team1 in teams_to_keep and match.team2 in teams_to_keep]
+        return MatchDataset(new_matches)
 
     # Read from csv, expecting format: matchId, timestamp, team1, team2, outcome
     @classmethod
