@@ -82,8 +82,9 @@ class MatchDataset:
                 self.teams[team].append(match)
             if match.winner is None: draws += 1
 
-        print(
-            f"Loaded dataset of {len(matches)} matches ({100 * draws / len(matches):.2g}% draws, {len(self.teams)} teams, at least {min(len(ms) for ms in self.teams.values())} matches per team)")
+        self.draw_count = draws
+        # print(
+            # f"Loaded dataset of {len(matches)} matches ({100 * draws / len(matches):.2g}% draws, {len(self.teams)} teams, at least {min(len(ms) for ms in self.teams.values())} matches per team)")
 
     def __iter__(self):
         return iter(self.matches)
@@ -210,4 +211,4 @@ class MatchDataset:
         return iter(self.matches)
 
     def __repr__(self):
-        return f"<MatchDataset: {len(self.matches)} matches>"
+        return f"<MatchDataset: {len(self.matches)} matches: ({100 * self.draw_count / len(self.matches):.2g}% draws, {len(self.teams)} teams, at least {min(len(ms) for ms in self.teams.values())} matches per team)>"
