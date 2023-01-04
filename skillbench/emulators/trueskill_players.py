@@ -1,4 +1,4 @@
-from .. import Emulator
+from skillbench.emulator import Emulator
 from trueskill import TrueSkill
 import itertools
 import math
@@ -52,12 +52,53 @@ class TrueSkillPlayersEmulator(Emulator):
 
     def visualize(self):
         players = list(self.ratings.keys())
-        players.sort(key=lambda x: x.name.lower())
+        players.sort(key=lambda x: x.lower())
         mus = [self.ratings.get(player).mu for player in players]
         sigmas = [self.ratings.get(player).sigma for player in players]
 
+        players = [player.replace("$", "\\$") for player in players]
         plt.errorbar(mus, players, xerr=sigmas, fmt='o')
         plt.axvline(x=self.ts.mu, color='r', linestyle='--')
         plt.title("TrueSkill ratings ($\mu \pm \sigma$)")
         plt.legend(["Initial avg rating", "Team rating $\mu \pm \sigma$"])
+        plt.show()
+
+    def visualize_match(self, team1, team2, winner, match_title=""):
+        # On left subplot, plot team1's players' ratings
+        # On right subplot, plot team2's players' ratings
+
+        loser = team1 if winner == team2 else team2
+        winner_advantage = self.emulate(winner, loser) - self.emulate(loser, winner)
+        certainty = abs(winner_advantage)
+
+        predicted_winner = winner if winner_advantage > 0 else loser
+
+        team1_ratings = self.get_player_ratings(team1)
+        team2_ratings = self.get_player_ratings(team2)
+
+        # Plot team1's players' ratings
+        plt.subplot(1, 2, 1)
+        players = [player.replace("$", "\\$") for player in team1.players]
+        mus = [rating.mu for rating in team1_ratings]
+        sigmas = [rating.sigma for rating in team1_ratings]
+        plt.errorbar(mus, players, xerr=sigmas, fmt='o')
+        plt.axvline(x=self.ts.mu, color='r', linestyle='--')
+        plt.title(f"Team {team1.name} ratings ($\mu \pm \sigma$)")
+        plt.legend(["Initial avg rating", "Team rating $\mu \pm \sigma$"])
+
+        # Plot team2's players' ratings
+        plt.subplot(1, 2, 2)
+        players = [player.replace("$", "\\$") for player in team2.players]
+        mus = [rating.mu for rating in team2_ratings]
+        sigmas = [rating.sigma for rating in team2_ratings]
+        plt.errorbar(mus, players, xerr=sigmas, fmt='o')
+        plt.axvline(x=self.ts.mu, color='r', linestyle='--')
+        plt.title(f"Team {team2.name} ratings ($\mu \pm \sigma$)")
+        plt.legend(["Initial avg rating", "Team rating $\mu \pm \sigma$"])
+
+        # correct = "correct" if winner == team1 else "incorrect"
+        title = "Team {} won. Trueskill emu thought {} would win, having positive certainty of {:.4f}.".format(winner.name, predicted_winner.name, certainty)
+        if match_title: title = match_title + "\n" + title
+        plt.suptitle(title)
+
         plt.show()

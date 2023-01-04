@@ -1,4 +1,4 @@
-from .. import Emulator
+from skillbench.emulator import Emulator
 from collections import defaultdict
 import matplotlib.pyplot as plt
 from typing import Optional

@@ -1,4 +1,4 @@
-from .. import Emulator
+from skillbench.emulator import Emulator
 from trueskill import TrueSkill
 import itertools
 import math

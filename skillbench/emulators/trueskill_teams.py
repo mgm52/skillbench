@@ -1,10 +1,11 @@
-from .. import Emulator
+
 from trueskill import TrueSkill
 import itertools
 import math
 import matplotlib.pyplot as plt
 
 from skillbench.data import Team, TeamPair
+from skillbench.emulator import Emulator
 
 
 class TrueSkillEmulator(Emulator):

@@ -6,6 +6,7 @@ from typing import Optional
 from skillbench.emulator import Emulator
 from skillbench.data import MatchDataset
 from skillbench.acquirer import AcquisitionFunction
+from skillbench import emulators 
 
 
 class Simulator:
@@ -42,8 +43,8 @@ class Simulator:
 
             emulator.fit_one_match(top_matchup, winner)
 
-    def evaluate_emulator(self, emulator: Emulator, visualize=False):
-        prediction_certainty_correct = []
+    def evaluate_emulator(self, emulator: Emulator, visualize=False, visualize_worst_matches=False):
+        prediction_certainty_correct_match = []
         acc = []
         for match in self.dataset:
             if match.winner is not None:  # Don't evaluate draws
@@ -56,15 +57,20 @@ class Simulator:
                 if visualize:
                     prediction = f"{team1.name}>{team2.name}" if emu1 > emu2 else f"{team2.name}>{team1.name}"
                     certainty = abs(emu1 - emu2)
-                    prediction_certainty_correct.append((prediction, certainty, correct))
+                    prediction_certainty_correct_match.append((prediction, certainty, correct, match))
         accuracy = np.mean(acc)
 
         if visualize:
             import matplotlib.pyplot as plt
             import matplotlib.font_manager as fm
             # Sort by certainty
-            prediction_certainty_correct.sort(key=lambda x: x[1], reverse=True)
-            predictions = [x[0] for x in prediction_certainty_correct]
+            prediction_certainty_correct_match.sort(key=lambda x: x[1], reverse=True)
+            limited = False
+            limit = 100
+            if len(prediction_certainty_correct_match) > limit:
+                prediction_certainty_correct_match = prediction_certainty_correct_match[:limit]
+                limited = True
+            predictions = [x[0] for x in prediction_certainty_correct_match]
 
             # Workaround to allow multiple rows with same label
             positions = range(len(predictions))
@@ -73,8 +79,8 @@ class Simulator:
             plt.figure(figsize=(10, 10))
             plt.barh(
                 positions,
-                [x[1] for x in prediction_certainty_correct],
-                color=["g" if x[2] else "r" for x in prediction_certainty_correct],
+                [x[1] for x in prediction_certainty_correct_match],
+                color=["g" if x[2] else "r" for x in prediction_certainty_correct_match],
                 label="_hid")
 
             # Workaround to add both colours to legend
@@ -82,11 +88,23 @@ class Simulator:
             plt.scatter([], [], c="r", label="Incorrect")
             plt.legend(["Correct", "Incorrect"])
 
-            plt.title(f"{emulator.name}'s predictions, {accuracy:.2%} accuracy")
+            plt.title(f"{emulator.name}'s predictions, {accuracy:.2%} accuracy" + (f", (limited to showing {limit} strongest predictions)" if limited else ""))
             plt.yticks(positions, predictions)
-            plt.xlabel("Certainty")
+            plt.xlabel("Certainty (abs(team1winprob - team2winprob))")
             plt.ylabel("Prediction")
             plt.grid(axis="x")
             plt.show()
+        
+        if visualize_worst_matches:
+            # Only works with TrueskillPlayersEmulator - hacky, sorry
+            incorrect_matches = [x for x in prediction_certainty_correct_match if not x[2]]
+            worst_matches = sorted(incorrect_matches, key=lambda x: x[1], reverse=True)
+            if len(worst_matches) >= 3:
+                for i in range(3):
+                    pccm = worst_matches[i]
+                    prediction, certainty, correct, match = pccm
+                    team1, team2 = match.teams
+                    winner = match.winner
+                    emulator.visualize_match(team1, team2, winner, match_title=f"#{i+1} Worst match prediction.")
 
         return accuracy
