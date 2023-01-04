@@ -21,8 +21,9 @@ def run_seed(seed):
     emus = [RandomEmulator(random), WinRateEmulator(), EloEmulator(), TrueSkillEmulator(), Glicko2Emulator(), TrueSkillPlayersEmulator()]
     # dataset = MatchDataset.from_csv("Dataset/csgo_34k.csv", random)
     dataset = MatchDataset.from_json("Dataset/dataset4.json", random)
+    dataset = dataset.filter_teams(min_games=20)
 
-    train_dataset, eval_dataset = dataset.split(0.5, random=False)
+    train_dataset, eval_dataset = dataset.split(0.5, random=52)
 
     train_sims = [Simulator(train_dataset, random) for _ in emus]
     eval_sim = Simulator(eval_dataset, random)

@@ -51,6 +51,19 @@ class Match:
         self.teams = teams
         self.winner = winner
 
+    @property
+    def team1(self):
+        return self.teams._teams_list[0]
+
+    @property
+    def team2(self):
+        return self.teams._teams_list[1]
+
+    @property
+    def loser(self):
+        if self.winner is None: return None
+        return self.team2 if self.winner == self.team1 else self.team1
+
     def __repr__(self):
         return f"Match({self.matchId}, {self.timestamp}, {self.teams}, {self.winner})"
 
@@ -69,15 +82,28 @@ class MatchDataset:
                 self.teams[team].append(match)
             if match.winner is None: draws += 1
 
-        print(
-            f"Loaded dataset of {len(matches)} matches ({100 * draws / len(matches):.2g}% draws, {len(self.teams)} teams, at least {min(len(ms) for ms in self.teams.values())} matches per team)")
+        self.draw_count = draws
+        # print(
+            # f"Loaded dataset of {len(matches)} matches ({100 * draws / len(matches):.2g}% draws, {len(self.teams)} teams, at least {min(len(ms) for ms in self.teams.values())} matches per team)")
 
     def __iter__(self):
         return iter(self.matches)
 
     def copy(self):
-        print("Copying dataset")
         return MatchDataset(self.matches.copy())
+
+    def filter_teams(self, min_games=1) -> "MatchDataset":
+        """Filter out teams that have played less than min_games"""
+        team_counter = defaultdict(int)
+        for match in self.matches:
+            team_counter[match.team1] += 1
+            team_counter[match.team2] += 1
+
+        teams_to_keep = set(team for team, count in team_counter.items() if count >= min_games)
+        print(f"Filtering out teams with less than {min_games} games: {len(teams_to_keep)} teams remaining")
+
+        new_matches = [match for match in self.matches if match.team1 in teams_to_keep and match.team2 in teams_to_keep]
+        return MatchDataset(new_matches)
 
     # Read from csv, expecting format: matchId, timestamp, team1, team2, outcome
     @classmethod
@@ -115,11 +141,12 @@ class MatchDataset:
         return cls(matches)
 
     @classmethod
-    def from_json(cls, matches_json_path: str, random):
+    def from_json(cls, matches_json_path: str, random, strict_loading=False):
         d = json.load(open(matches_json_path, 'r'))
 
         matches = []
 
+        fails = []
         sorted_match_objects = sorted(d.items(), key=lambda match: match[1]['timestamp'])
         for match_id, match in sorted_match_objects:
             try:
@@ -149,8 +176,14 @@ class MatchDataset:
 
                 matches.append(Match(match_id, match['timestamp'], TeamPair(team1, team2, random), winner))
             except Exception as e:
-                print(match_id, "failed to load.")
+                if strict_loading:
+                    raise e
+                # print(match_id, "failed to load.")
+                fails.append(match_id)
                 continue
+
+        if fails:
+            print(f"Failed to load {len(fails)} matches: {fails}")
 
         return cls(matches)
 
@@ -178,4 +211,4 @@ class MatchDataset:
         return iter(self.matches)
 
     def __repr__(self):
-        return f"<MatchDataset: {len(self.matches)} matches>"
+        return f"<MatchDataset: {len(self.matches)} matches: ({100 * self.draw_count / len(self.matches):.2g}% draws, {len(self.teams)} teams, at least {min(len(ms) for ms in self.teams.values())} matches per team)>"

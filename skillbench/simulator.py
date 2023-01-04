@@ -18,9 +18,9 @@ class Simulator:
     def reset_data(self):
         self.matchups_left = dict(self.dataset.matchups)
 
-    def fit_emulator(self, emulator: Emulator, n_evals: int, acquisition_function: AcquisitionFunction, max_aquisitions: Optional[int] = None):        
+    def fit_emulator(self, emulator: Emulator, n_evals: int, acquisition_function: AcquisitionFunction, max_aquisitions: Optional[int] = None, bar: bool=True):        
         "Let the emulator choose N matches to learn from"
-        bar = tqdm if n_evals > 10 else lambda x: x
+        bar = tqdm if n_evals > 10 and bar else lambda x: x
         for i in bar(range(n_evals)):
             if len(self.matchups_left) == 0:
                 print("Stopping training: no matches left")

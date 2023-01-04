@@ -9,10 +9,10 @@ from skillbench.emulator import Emulator
 
 
 class TrueSkillEmulator(Emulator):
-    def __init__(self, mu=25, sigma=25/3):
+    def __init__(self, mu=25, sigma=25/3, beta=25/6, tau=25/300):
         self.mu = mu
         self.sigma = sigma
-        self.ts = TrueSkill(mu, sigma)
+        self.ts = TrueSkill(mu=mu, sigma=sigma, beta=beta, tau=tau, backend="mpmath")
         self.ratings = {}
 
     def emulate(self, team1, team2):
