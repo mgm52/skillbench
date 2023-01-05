@@ -90,7 +90,7 @@ def pool_run(pool, params, n=1):
 if __name__ == '__main__':
     import multiprocessing
 
-    pool = multiprocessing.Pool(1)
+    pool = multiprocessing.Pool(32)
     results1 = pool_run(pool, params, 100)
 
     import pickle
