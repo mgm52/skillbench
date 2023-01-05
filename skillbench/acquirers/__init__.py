@@ -1,4 +1,5 @@
 from .least_seen_af import LeastSeenAcquisitionFunction
+from .least_seen_players_af import LeastSeenPlayersAcquisitionFunction
 from .random_af import RandomAcquisitionFunction
 from .likeliest_draw_af import LikeliestDrawAcquisitionFunction
 from .likeliest_win_af import LikeliestWinAcquisitionFunction

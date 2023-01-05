@@ -8,6 +8,7 @@ from skillbench.data import Team, TeamPair
 
 class RandomEmulator(Emulator):
     def __init__(self, random):
+        super().__init__()
         self.random = random
         pass
 
@@ -15,6 +16,7 @@ class RandomEmulator(Emulator):
         return self.random.random()
 
     def fit_one_match(self, teams: TeamPair, winner: Team):
+        super().fit_one_match(teams, winner)
         pass
 
     @property

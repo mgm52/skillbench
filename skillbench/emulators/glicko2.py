@@ -10,6 +10,7 @@ from skillbench.data import Team, TeamPair
 ####### Glicko2 class based on https://github.com/sublee/glicko2/blob/master/glicko2.py under BSD license
 class Glicko2Emulator(Emulator):
     def __init__(self, mu=1500, phi=350, sigma=0.06, tau=1.0, epsilon=0.000001):
+        super().__init__()
         self.mu = mu
         self.phi = phi
         self.sigma = sigma
@@ -39,6 +40,7 @@ class Glicko2Emulator(Emulator):
         return expected_score
 
     def fit_one_match(self, teams: TeamPair, winner: Team):
+        super().fit_one_match(teams, winner)
         # Use outcome to update rating of each team (i.e. self.ratings)
         team1, team2 = teams
         if winner:

@@ -10,6 +10,7 @@ from skillbench.emulator import Emulator
 
 class TrueSkillEmulator(Emulator):
     def __init__(self, mu=25, sigma=25/3, beta=25/6, tau=25/300):
+        super().__init__()
         self.mu = mu
         self.sigma = sigma
         self.ts = TrueSkill(mu=mu, sigma=sigma, beta=beta, tau=tau, backend="mpmath")
@@ -30,6 +31,7 @@ class TrueSkillEmulator(Emulator):
         return self.ts.cdf(delta_mu / denom)
 
     def fit_one_match(self, teams: TeamPair, winner: Team):
+        super().fit_one_match(teams, winner)
         # Use outcome to update rating of each team (i.e. self.ratings)
         team1, team2 = teams
         rating1 = self.ratings.get(team1, self.ts.Rating())

@@ -9,6 +9,7 @@ from skillbench.data import Team, TeamPair
 ####### Elo class based on https://github.com/ddm7018/Elo/blob/master/elosports/elo.py under MIT license
 class EloEmulator(Emulator):
     def __init__(self, k=10, mu=1500):
+        super().__init__()
         self.k = k
         self.mu = mu
 
@@ -20,6 +21,7 @@ class EloEmulator(Emulator):
         return 1 / (10 ** exp + 1)
 
     def fit_one_match(self, teams: TeamPair, winner: Optional[Team]):
+        super().fit_one_match(teams, winner)
         # Use outcome to update rating of each team (i.e. self.ratings)
         team1, team2 = teams
         prob1 = self.emulate(team1, team2) # Probability of team1 winning

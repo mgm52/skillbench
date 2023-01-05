@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from tqdm import tqdm
 from collections import defaultdict
 import multiprocessing, pickle
-from skillbench.acquirers import LikeliestDrawAcquisitionFunction
+from skillbench.acquirers import LikeliestDrawAcquisitionFunction, LeastSeenAcquisitionFunction, LeastSeenPlayersAcquisitionFunction
 
 import argparse
 
@@ -21,7 +21,7 @@ def run_seed(seed):
     emus = [RandomEmulator(random), WinRateEmulator(), EloEmulator(), TrueSkillEmulator(), Glicko2Emulator(), TrueSkillPlayersEmulator()]
     # dataset = MatchDataset.from_csv("Dataset/csgo_34k.csv", random)
     dataset = MatchDataset.from_json("Dataset/dataset4.json", random)
-    dataset = dataset.filter_teams(min_games=20)
+    # dataset = dataset.filter_teams(min_games=20)
 
     train_dataset, eval_dataset = dataset.split(0.5, random=52)
 
@@ -36,7 +36,8 @@ def run_seed(seed):
     logs = []
     for i in tqdm(range(len(train_dataset))):
         for train_sim, emu in zip(train_sims, emus):
-            train_sim.fit_emulator(emu, n_evals=1, acquisition_function=LikeliestDrawAcquisitionFunction(), max_aquisitions=max_aquisitions)
+            af = LeastSeenPlayersAcquisitionFunction() if "TrueSkillPlayers" in emu.name else LeastSeenAcquisitionFunction()
+            train_sim.fit_emulator(emu, n_evals=1, acquisition_function=af, max_aquisitions=max_aquisitions)
 
             if i % log_every == 0:
                 acc_train = train_sim.evaluate_emulator(emu)
