@@ -12,8 +12,11 @@ class LeastSeenAcquisitionFunction(AcquisitionFunction):
         super().__call__(emu, teams)
         team1, team2 = teams
         # One information-theoretic approach: assume that the more times a team has been seen, the more information we have about it, logarithmically
-        count1, count2 = emu.team_fit_count.get(team1, 0), emu.team_fit_count.get(team2, 0)
-        information = -1 * (math.log(count1+1) + math.log(count2+1))
+        if hasattr(emu, "player_fit_count"):
+            counts = [emu.player_fit_count.get(player, 0) for player in team1.players + team2.players]
+        else:
+            counts = emu.team_fit_count.get(team1, 0), emu.team_fit_count.get(team2, 0)
+        information = -1 * sum([math.log(count+1) for count in counts])
         return information
 
 if __name__ == "__main__":
