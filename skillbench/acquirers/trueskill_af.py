@@ -5,7 +5,7 @@ from skillbench import emulators
 import random
 
 @compatible_emulators(emulators.TrueSkillEmulator, emulators.TrueSkillPlayersEmulator)
-class TSAcquisitionFunction(AcquisitionFunction):
+class TSQualityAF(AcquisitionFunction):
     def __call__(self, emu: Emulator, teams: TeamPair) -> float:
         super().__call__(emu, teams)
         # Get match quality from ts
@@ -20,7 +20,7 @@ class TSAcquisitionFunction(AcquisitionFunction):
         return emu.ts.quality([rg1, rg2])
 
 if __name__ == "__main__":
-    tsaf = TSAcquisitionFunction()
+    tsaf = TSQualityAF()
     ts_emu = emulators.TrueSkillEmulator()
     print(tsaf.compatible_emulators)
     print(tsaf(ts_emu, TeamPair(Team("A"), Team("B"), random)))

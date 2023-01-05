@@ -5,7 +5,7 @@ from skillbench.emulator import Emulator
 import random
 
 @compatible_emulators()
-class LikeliestWinAcquisitionFunction(AcquisitionFunction):
+class LikeliestWinAF(AcquisitionFunction):
     def __call__(self, emu: Emulator, teams: TeamPair) -> float:
         super().__call__(emu, teams)
         team1, team2 = teams

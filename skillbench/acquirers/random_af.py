@@ -5,13 +5,13 @@ from skillbench.emulator import Emulator
 import random
 
 @compatible_emulators()
-class RandomAcquisitionFunction(AcquisitionFunction):
+class RandomAF(AcquisitionFunction):
     def __call__(self, emu: Emulator, teams: TeamPair) -> float:
         super().__call__(emu, teams)
         return 0.5
 
 if __name__ == "__main__":
-    raf = RandomAcquisitionFunction()
+    raf = RandomAF()
     rand_emu = emulators.RandomEmulator(random)
     print(raf.compatible_emulators)
     print(raf(rand_emu, TeamPair(Team("A"), Team("B"), random)))

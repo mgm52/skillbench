@@ -7,7 +7,7 @@ import random
 import math
 
 @compatible_emulators()
-class LeastSeenAcquisitionFunction(AcquisitionFunction):
+class LeastSeenAF(AcquisitionFunction):
     def __call__(self, emu: Emulator, teams: TeamPair) -> float:
         super().__call__(emu, teams)
         team1, team2 = teams
@@ -20,7 +20,7 @@ class LeastSeenAcquisitionFunction(AcquisitionFunction):
         return information
 
 if __name__ == "__main__":
-    lsaf = LeastSeenAcquisitionFunction()
+    lsaf = LeastSeenAF()
     wr_emu = emulators.WinRateEmulator()
     print(lsaf.compatible_emulators)
     print(lsaf(wr_emu, TeamPair(Team("A"), Team("B"), random)))
