@@ -14,10 +14,13 @@ class Emulator(ABC):
         "Given some ground truth match data, update the emulator's internals using it"
         # Expect each subclass to call super().fit_one_match(teams, winner) to update the fit counts
         # TODO: consider whether there's a better way to do this...
+        self.matchup_fit_count[teams] = self.matchup_fit_count.get(teams, 0) + 1
         for team in teams:
             self.team_fit_count[team] = self.team_fit_count.get(team, 0) + 1
+            self.team_fit_total += 1
             for player in team.players:
                 self.player_fit_count[player] = self.player_fit_count.get(player, 0) + 1
+                self.player_fit_total += 1
         pass
 
     @property
@@ -27,6 +30,9 @@ class Emulator(ABC):
     def __init__(self):
         # Expect each subclass to call super().__init__() to initialize the fit counts
         # TODO: consider whether there's a better way to do this...
+        self.matchup_fit_count = {}
         self.team_fit_count = {}
+        self.team_fit_total = 0
         self.player_fit_count = {}
+        self.player_fit_total = 0
         #print(f"Initialized Emulator")

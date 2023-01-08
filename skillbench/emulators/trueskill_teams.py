@@ -3,6 +3,7 @@ from trueskill import TrueSkill
 import itertools
 import math
 import matplotlib.pyplot as plt
+import copy
 
 from skillbench.data import Team, TeamPair
 from skillbench.emulator import Emulator
@@ -15,6 +16,16 @@ class TrueSkillEmulator(Emulator):
         self.sigma = sigma
         self.ts = TrueSkill(mu=mu, sigma=sigma, beta=beta, tau=tau, backend="mpmath")
         self.ratings = {}
+
+    def __deepcopy__(self, memodict={}):
+        ts2 = TrueSkillEmulator(self.mu, self.sigma, self.ts.beta, self.ts.tau)
+        ts2.ratings = copy.deepcopy(self.ratings)
+        ts2.matchup_fit_count = self.matchup_fit_count
+        ts2.team_fit_count = self.team_fit_count
+        ts2.team_fit_total = self.team_fit_total
+        ts2.player_fit_count = self.player_fit_count
+        ts2.player_fit_total = self.player_fit_total
+        return ts2
 
     def emulate(self, team1, team2):
         # Replace teams by their rating

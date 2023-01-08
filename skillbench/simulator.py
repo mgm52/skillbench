@@ -21,6 +21,9 @@ class Simulator:
     def fit_emulator(self, emulator: Emulator, n_evals: int, acquisition_function: AcquisitionFunction, max_aquisitions: Optional[int] = None, bar: bool=True):        
         "Let the emulator choose N matches to learn from"
         bar = tqdm if n_evals > 10 and bar else lambda x: x
+        if hasattr(acquisition_function, "load_sim"):
+            # Only for cheating AFs!
+            acquisition_function.load_sim(self)
         for i in bar(range(n_evals)):
             if len(self.matchups_left) == 0:
                 print("Stopping training: no matches left")
@@ -34,6 +37,7 @@ class Simulator:
 
             # TODO: validate that this order is random? i.e. to avoid bias among equal values
             top_matchup = max(keys, key=lambda k: acquisition_function(emulator, k))
+            # print(f"Top matchup: {top_matchup} with new score {acquisition_function(emulator, top_matchup)}")
 
             # When fitting a match, remove it from the dataset
             pop_id = self.random.choice(range(len(self.matchups_left[top_matchup])))
