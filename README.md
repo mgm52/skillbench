@@ -1,4 +1,20 @@
-# L48-true-skill-gp
+# skillbench
+
+A multi-fidelity analysis of skill rating systems against CS:GO games! You can read our final report [here](https://github.com/mgm52/skillbench/blob/main/MLPW_Paper.pdf). This project was for the research component of Neil Lawrence's _Machine Learning and the Physical World_ ([L48](https://mlatcl.github.io/mlphysical/)) course. 
+
+> **Abstract** — The meteoric rise of online games has created a
+need for accurate skill rating systems, which can quickly
+determine a team’s skill for the purpose of tracking
+improvement and fair matchmaking. Although many systems
+for determining skill ratings are deployed, with various
+theoretical foundations, less work has been done at analysing
+the real-world performance of these algorithms. In this
+paper, we perform an empirical analysis of several systems
+through the lens of surrogate modelling, where the model
+can choose which matches are played next. We look both
+at overall performance and data efficiency, and perform a
+thorough sensitivity analysis.
+
 
 
 ## Installation
